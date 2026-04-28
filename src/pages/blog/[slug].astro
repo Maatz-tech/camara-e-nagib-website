@@ -169,18 +169,23 @@ const jsonLd = [
         <div
           class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"
         >
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-4">
             <img
               src={authorImage}
               alt={post.data.author}
-              class="size-10 rounded-full object-cover md:size-11"
+              class="size-12 shrink-0 rounded-full border border-gold-10 object-cover object-top shadow-sm md:size-14"
               loading="lazy"
-              width="44"
-              height="44"
+              width="56"
+              height="56"
             />
-            <span class="text-[16px] font-semibold text-[#2f2019] md:text-[18px]">
-              {post.data.author}
-            </span>
+            <div class="flex flex-col">
+              <span class="text-[12px] font-medium uppercase tracking-[0.5px] text-gold">
+                Escrito por
+              </span>
+              <span class="text-[16px] font-semibold leading-tight text-[#2f2019] md:text-[18px]">
+                {post.data.author}
+              </span>
+            </div>
           </div>
 
           <div class="flex items-center gap-3.5">
