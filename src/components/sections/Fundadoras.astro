@@ -1,0 +1,127 @@
+---
+import Icon from '../Icon.astro';
+
+interface Founder {
+  name: string;
+  oab: string;
+  area: string;
+  bio: string[];
+  image: string;
+  instagram?: string;
+  linkedin?: string;
+}
+
+const founders: Founder[] = [
+  {
+    name: 'Rafaela Câmara',
+    oab: 'OAB/RN 13.380',
+    area: 'Direito das Famílias e Sucessões',
+    bio: [
+      'Advogada com atuação estratégica em Direito de Família e Sucessões, com foco na proteção patrimonial e organização jurídica de estruturas familiares.',
+      'Sua atuação é direcionada ao planejamento familiar, sucessório e matrimonial, com ênfase na antecipação de riscos e na preservação do patrimônio em cenários de transição.',
+    ],
+    image: '/images/sobre/rafaela.webp',
+    instagram: '#',
+    linkedin: '#',
+  },
+  {
+    name: 'Ana Carolina Nagib',
+    oab: 'OAB/RN 5.438',
+    area: 'Direito Imobiliário',
+    bio: [
+      'Advogada com atuação estratégica em Direito Imobiliário, com foco em decisões que envolvem alto impacto patrimonial e financeiro.',
+      'Atua na estruturação e análise jurídica de operações imobiliárias, antecipando riscos e garantindo segurança na alocação de capital.',
+    ],
+    image: '/images/sobre/ana-carolina.webp',
+    instagram: '#',
+    linkedin: '#',
+  },
+];
+---
+
+<section class="w-full border-b border-gold-5 bg-white">
+  <div
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 pt-12 pb-12 md:gap-20 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <div class="flex flex-col gap-5">
+      <h2
+        class="text-[32px] font-normal leading-tight text-[#2f2019] md:text-[48px] md:leading-[48px]"
+      >
+        Conheça as fundadoras
+      </h2>
+      <span class="block h-1 w-20 rounded-full bg-gold"></span>
+    </div>
+
+    <div class="flex flex-col gap-12 md:gap-20">
+      {
+        founders.map((f, idx) => (
+          <article
+            class:list={[
+              'flex flex-col gap-8 md:gap-20',
+              idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse',
+            ]}
+          >
+            <div class="relative aspect-[350/450] w-full overflow-hidden rounded-3xl md:w-[350px] md:shrink-0 lg:w-[380px]">
+              <img
+                src={f.image}
+                alt={f.name}
+                class="absolute inset-0 h-full w-full object-cover object-center"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="flex flex-1 flex-col gap-6">
+              <div class="flex flex-col gap-3">
+                <h3
+                  class="text-[26px] font-medium leading-tight tracking-[-1px] text-[#2f2019] md:text-[32px] md:tracking-[-1.5px]"
+                >
+                  {f.name}
+                </h3>
+                <p class="text-[15px] font-semibold text-gold md:text-[16px]">
+                  {f.oab}
+                </p>
+                <p class="text-[12px] font-semibold uppercase tracking-[1.2px] text-gold md:text-[14px]">
+                  {f.area}
+                </p>
+              </div>
+
+              <div class="flex flex-col gap-4 text-[15px] font-normal leading-[1.5] text-[#2f2019] md:text-[18px]">
+                {f.bio.map((p) => <p>{p}</p>)}
+              </div>
+
+              <div class="flex flex-col gap-4">
+                <p class="text-[15px] font-semibold leading-[1.5] text-[#2f2019] md:text-[16px]">
+                  Acompanhe nas redes
+                </p>
+                <div class="flex items-center gap-3.5">
+                  {f.instagram && (
+                    <a
+                      href={f.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Instagram de ${f.name}`}
+                      class="flex size-12 items-center justify-center rounded-full border border-white bg-navy text-white transition-opacity hover:opacity-85"
+                    >
+                      <Icon name="instagram" size={18} />
+                    </a>
+                  )}
+                  {f.linkedin && (
+                    <a
+                      href={f.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`LinkedIn de ${f.name}`}
+                      class="flex size-12 items-center justify-center rounded-full border border-white bg-navy text-white transition-opacity hover:opacity-85"
+                    >
+                      <Icon name="linkedin" size={18} />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

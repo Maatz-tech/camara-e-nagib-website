@@ -1,0 +1,180 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHeader from '../../components/sections/PageHeader.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+
+const featuredPost =
+  sortedPosts.find((p) => p.data.featured) ?? sortedPosts[0];
+const regularPosts = sortedPosts.filter((p) => p.id !== featuredPost?.id);
+
+const categories = [
+  'Todos',
+  'Direito Imobiliário',
+  'Direito de Família',
+  'Sucessões',
+  'Planejamento Patrimonial',
+  'Notícias',
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Blog Câmara & Nagib',
+  description:
+    'Artigos jurídicos sobre Direito Imobiliário, Família, Sucessões e Planejamento Patrimonial.',
+  url: 'https://camaraenagib.adv.br/blog',
+};
+---
+
+<Base
+  title="Blog Jurídico | Câmara & Nagib Advogados Associados"
+  description="Insights e análises sobre Direito Imobiliário, Direito de Família, Sucessões e Planejamento Patrimonial — escritos pelas sócias do escritório."
+  jsonLd={jsonLd}
+>
+  <Header />
+
+  <main id="main-content">
+    <PageHeader
+      eyebrow="blog jurídico"
+      title="Insights para decisões patrimoniais"
+      subtitle="Análises jurídicas e estratégicas sobre Direito Imobiliário, Família, Sucessões e Planejamento Patrimonial."
+      align="center"
+      watermark="/images/sobre/page-header-watermark.svg"
+      watermarkPosition="center"
+    />
+
+    {
+      featuredPost && (
+        <section class="w-full bg-white">
+          <div class="mx-auto w-full max-w-[1280px] px-6 pt-12 md:px-[120px] md:pt-16">
+            <BlogCard
+              slug={featuredPost.id}
+              title={featuredPost.data.title}
+              summary={featuredPost.data.summary}
+              image={featuredPost.data.image}
+              category={featuredPost.data.category}
+              date={featuredPost.data.date}
+              variant="featured"
+            />
+          </div>
+        </section>
+      )
+    }
+
+    <section class="w-full bg-white">
+      <div
+        class="mx-auto flex w-full max-w-[1280px] flex-col gap-8 px-6 pt-10 pb-16 md:gap-10 md:px-[120px] md:pt-16 md:pb-20"
+      >
+        <div
+          class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-10"
+        >
+          <h2
+            class="text-[26px] font-medium leading-tight tracking-[-0.6px] text-[#2f2019] md:text-[36px] md:tracking-[-0.9px]"
+          >
+            Todos os artigos
+          </h2>
+
+          <div
+            class="-mx-6 overflow-hidden md:mx-0 md:overflow-visible"
+            role="region"
+            aria-label="Filtros por categoria"
+          >
+            <div
+              class="blog-filters flex gap-3 overflow-x-auto px-6 md:flex-wrap md:overflow-visible md:px-0"
+              style="scrollbar-width: none;"
+            >
+              {
+                categories.map((cat, i) => (
+                  <button
+                    type="button"
+                    class:list={[
+                      'blog-filter shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-[14px] font-semibold transition-colors md:text-[15px]',
+                      i === 0
+                        ? 'is-active border-gold bg-gold text-white'
+                        : 'border-gold-30 bg-white text-[#2f2019] hover:border-gold hover:text-gold',
+                    ]}
+                    data-filter={cat}
+                  >
+                    {cat}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {
+            regularPosts.map((post) => (
+              <div data-category={post.data.category}>
+                <BlogCard
+                  slug={post.id}
+                  title={post.data.title}
+                  summary={post.data.summary}
+                  image={post.data.image}
+                  category={post.data.category}
+                  date={post.data.date}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>('.blog-filter');
+  const cards = document.querySelectorAll<HTMLElement>('[data-category]');
+
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filters.forEach((f) => {
+        f.classList.remove('is-active', 'border-gold', 'bg-gold', 'text-white');
+        f.classList.add(
+          'border-gold-30',
+          'bg-white',
+          'text-[#2f2019]',
+          'hover:border-gold',
+          'hover:text-gold',
+        );
+      });
+      btn.classList.add('is-active', 'border-gold', 'bg-gold', 'text-white');
+      btn.classList.remove(
+        'border-gold-30',
+        'bg-white',
+        'text-[#2f2019]',
+        'hover:border-gold',
+        'hover:text-gold',
+      );
+
+      const category = btn.dataset.filter;
+      cards.forEach((card) => {
+        if (category === 'Todos' || card.dataset.category === category) {
+          card.removeAttribute('hidden');
+        } else {
+          card.setAttribute('hidden', '');
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .blog-filters::-webkit-scrollbar {
+    display: none;
+  }
+</style>

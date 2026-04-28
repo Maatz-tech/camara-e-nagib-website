@@ -1,0 +1,95 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  summary: string;
+  image: string;
+  category?: string;
+  date?: string;
+  variant?: 'default' | 'featured';
+}
+
+const {
+  slug,
+  title,
+  summary,
+  image,
+  category,
+  date,
+  variant = 'default',
+} = Astro.props;
+
+const isFeatured = variant === 'featured';
+---
+
+<a
+  href={`/blog/${slug}`}
+  class:list={[
+    'group flex flex-col overflow-hidden rounded-2xl border border-gold-10 bg-white transition-shadow hover:shadow-[0_4px_24px_rgba(0,0,0,0.06)]',
+    isFeatured ? 'md:flex-row md:gap-0' : 'gap-4',
+  ]}
+>
+  <div
+    class:list={[
+      'overflow-hidden',
+      isFeatured ? 'md:w-1/2' : 'aspect-[640/280] w-full',
+    ]}
+  >
+    <img
+      src={image}
+      alt={title}
+      class:list={[
+        'h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]',
+        isFeatured ? 'aspect-[760/340] md:aspect-auto md:h-full' : '',
+      ]}
+      width="640"
+      height="280"
+      loading={isFeatured ? 'eager' : 'lazy'}
+    />
+  </div>
+
+  <div
+    class:list={[
+      'flex flex-1 flex-col gap-3 px-6 pb-6',
+      isFeatured ? 'md:gap-4 md:p-8' : '',
+    ]}
+  >
+    {
+      category && (
+        <span class="text-[12px] font-bold uppercase leading-4 tracking-[0.5px] text-gold">
+          {category}
+        </span>
+      )
+    }
+    <h3
+      class:list={[
+        'font-semibold leading-snug text-[#2f2019]',
+        isFeatured ? 'text-[20px] md:text-[24px]' : 'text-[18px]',
+      ]}
+    >
+      {title}
+    </h3>
+    <p
+      class:list={[
+        'font-normal leading-[1.5] text-[#33261d]',
+        isFeatured ? 'text-[15px] md:text-[16px]' : 'text-[14px] md:text-[15px]',
+      ]}
+    >
+      {summary}
+    </p>
+    {
+      date && (
+        <time
+          datetime={date}
+          class="mt-1 text-[12px] font-medium leading-4 text-[#2f2019]/60 md:text-[13px]"
+        >
+          {new Date(date).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          })}
+        </time>
+      )
+    }
+  </div>
+</a>

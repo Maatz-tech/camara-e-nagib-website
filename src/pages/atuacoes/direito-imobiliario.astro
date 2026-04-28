@@ -1,0 +1,145 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHeader from '../../components/sections/PageHeader.astro';
+import IntroAtuacao from '../../components/sections/IntroAtuacao.astro';
+import DecisoesBlock from '../../components/sections/DecisoesBlock.astro';
+import OndeAtuamos from '../../components/sections/OndeAtuamos.astro';
+import CtaFinal from '../../components/sections/CtaFinal.astro';
+
+const ICON_BASE = '/images/atuacoes/direito-imobiliario/icons';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Direito Imobiliário',
+    provider: { '@type': 'LegalService', name: 'Câmara & Nagib Advogados Associados' },
+    areaServed: { '@type': 'City', name: 'Natal' },
+    description:
+      'Assessoria jurídica especializada em Direito Imobiliário — proteção patrimonial, investimentos imobiliários e regularização de imóveis.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://camaraenagib.adv.br/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Direito Imobiliário',
+        item: 'https://camaraenagib.adv.br/atuacoes/direito-imobiliario',
+      },
+    ],
+  },
+];
+
+const estrategiaImobiliaria = {
+  eyebrow: 'Decisões de Alto Impacto',
+  title: 'Estratégia Imobiliária',
+  items: [
+    {
+      title: 'Consultoria Imobiliária e Patrimonial',
+      tags: ['INVESTIDORES', 'MITIGAÇÃO DE RISCO', 'ESTRATÉGICO'],
+      description:
+        'Diagnóstico jurídico para antecipação de riscos e definição de estratégias que protegem o patrimônio.',
+    },
+    {
+      title: 'Investimentos Imobiliários',
+      tags: ['RECORRENTE', 'PREVENTIVO', 'CORPORATIVO'],
+      description:
+        'Análise jurídica de ativos com foco na mitigação de riscos e proteção do capital.',
+    },
+    {
+      title: 'Regularização de Imóveis',
+      tags: ['USUCAPIÃO', 'ASSESSORIA', 'VALORIZAÇÃO'],
+      description:
+        'Estruturação jurídica para viabilizar operações e garantir segurança patrimonial.',
+    },
+  ],
+};
+
+const ondeAtuamosItems = [
+  {
+    icon: `${ICON_BASE}/dollar-sign.svg`,
+    title: 'Compra e venda de imóveis',
+    description:
+      'Assessoria na compra e venda de imóveis, com análise documental, elaboração e revisão de contratos, suporte às partes e acompanhamento do registro e financiamento imobiliário.',
+  },
+  {
+    icon: `${ICON_BASE}/warehouse.svg`,
+    title: 'Imóveis Rurais e Terrenos de Marinha',
+    description:
+      'Atuação em transações e regularização de imóveis rurais e terrenos de marinha, incluindo análise legal, documentação e adequação às exigências específicas desse tipo de propriedade.',
+  },
+  {
+    icon: `${ICON_BASE}/building-2.svg`,
+    title: 'Regularização de imóveis',
+    description:
+      'Serviço voltado à regularização de imóveis em casos de divórcio e inventário, incluindo usucapião, averbações e adequação de edificações e parcelamento do solo.',
+  },
+  {
+    icon: `${ICON_BASE}/stamp.svg`,
+    title: 'Incorporações imobiliárias',
+    description:
+      'Assessoria em projetos de incorporação imobiliária, com suporte em estruturação, análise legal, elaboração de documentos e acompanhamento das etapas exigidas por lei.',
+  },
+  {
+    icon: `${ICON_BASE}/file-x.svg`,
+    title: 'Distratos imobiliários',
+    description:
+      'Atuação na rescisão de contratos imobiliários, com orientação jurídica, negociação entre as partes e definição de direitos e obrigações decorrentes do distrato.',
+  },
+  {
+    icon: `${ICON_BASE}/building.svg`,
+    title: 'Direito consumerista imobiliário',
+    description:
+      'Atuação em conflitos entre consumidores e incorporadoras ou construtoras, especialmente em casos de atraso na entrega de obras e vícios de construção.',
+  },
+  {
+    icon: `${ICON_BASE}/handshake.svg`,
+    title: 'Locação de imóvel',
+    description:
+      'Assessoria jurídica em contratos de locação, incluindo elaboração, revisão, análise de cláusulas e suporte em questões como cobrança, despejo e demais relações locatícias.',
+  },
+];
+---
+
+<Base
+  title="Direito Imobiliário | Câmara & Nagib Advogados Associados"
+  description="Assessoria jurídica especializada em Direito Imobiliário — proteção patrimonial, investimentos imobiliários e regularização de imóveis."
+  jsonLd={jsonLd}
+>
+  <Header />
+
+  <main id="main-content">
+    <PageHeader
+      eyebrow="nossos serviços"
+      title="Direito Imobiliário"
+      watermark="/images/atuacoes/direito-imobiliario/page-header-watermark.svg"
+    />
+    <IntroAtuacao
+      titleStart="Estratégia Imobiliária para"
+      titleEmphasis="proteger seu patrimônio"
+      description={[
+        'Na Câmara e Nagib, atuamos com assessoria jurídica especializada em Direito Imobiliário, oferecendo suporte estratégico para pessoas físicas, famílias, investidores e empresas em negociações, regularizações e disputas relacionadas a bens imóveis.',
+        'Nossa atuação é voltada à prevenção de riscos, à proteção patrimonial e à condução segura de operações imobiliárias, sempre com análise técnica, clareza e atenção aos impactos jurídicos e financeiros de cada decisão.',
+      ]}
+      image1="/images/atuacoes/direito-imobiliario/intro-1.webp"
+      image2="/images/atuacoes/direito-imobiliario/intro-2.webp"
+      logo="/images/atuacoes/direito-imobiliario/intro-logo.svg"
+    />
+    <section class="w-full border-b border-gold-5 bg-white">
+      <div
+        class="mx-auto w-full max-w-[1440px] px-6 pt-12 pb-12 md:px-[120px] md:pt-20 md:pb-20"
+      >
+        <DecisoesBlock {...estrategiaImobiliaria} />
+      </div>
+    </section>
+    <OndeAtuamos items={ondeAtuamosItems} />
+    <CtaFinal />
+  </main>
+
+  <Footer />
+</Base>

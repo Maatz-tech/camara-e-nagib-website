@@ -1,0 +1,149 @@
+---
+import Icon from './Icon.astro';
+---
+
+<dialog
+  id="download-popup"
+  class="m-auto w-full max-w-[600px] rounded-[24px] bg-[#f9fafb] p-0 shadow-2xl backdrop:bg-black/40 backdrop:backdrop-blur-sm md:rounded-[40px]"
+>
+  <form id="download-form" method="dialog" class="relative flex flex-col gap-8 px-6 pb-6 pt-12 md:gap-10 md:p-14">
+    <!-- Close button -->
+    <button
+      type="button"
+      class="download-popup-close absolute right-4 top-4 flex size-6 items-center justify-center text-[#2f2019] transition-opacity hover:opacity-70 md:right-6 md:top-6"
+      aria-label="Fechar"
+    >
+      <Icon name="close" size={24} />
+    </button>
+
+    <h2
+      class="text-[18px] font-semibold leading-tight tracking-[-0.5px] text-gold md:text-[20px] md:tracking-[-1.2px]"
+    >
+      Preencha o formulário para baixar gratuitamente
+    </h2>
+
+    <div class="flex flex-col gap-6">
+      <!-- Nome -->
+      <div class="flex flex-col gap-2">
+        <label for="dl-name" class="flex gap-1 text-[15px] font-medium leading-[1.4] text-[#2f2019] md:text-[16px]">
+          <span>Nome</span>
+          <span class="text-[#b3261e]">*</span>
+        </label>
+        <input
+          type="text"
+          id="dl-name"
+          name="name"
+          required
+          placeholder="Seu nome completo"
+          class="rounded-full border border-[#d1d5db] bg-white px-5 py-4 text-[14px] font-normal text-[#2f2019] placeholder:text-black/25 focus:border-gold focus:outline-none md:text-[16px]"
+        />
+      </div>
+
+      <!-- E-mail -->
+      <div class="flex flex-col gap-2">
+        <label for="dl-email" class="flex gap-1 text-[15px] font-medium leading-[1.4] text-[#2f2019] md:text-[16px]">
+          <span>E-mail</span>
+          <span class="text-[#b3261e]">*</span>
+        </label>
+        <input
+          type="email"
+          id="dl-email"
+          name="email"
+          required
+          placeholder="Seu melhor e-mail"
+          class="rounded-full border border-[#d1d5db] bg-white px-5 py-4 text-[14px] font-normal text-[#2f2019] placeholder:text-black/25 focus:border-gold focus:outline-none md:text-[16px]"
+        />
+      </div>
+
+      <!-- Telefone -->
+      <div class="flex flex-col gap-2">
+        <label for="dl-phone" class="flex gap-1 text-[15px] font-medium leading-[1.4] text-[#2f2019] md:text-[16px]">
+          <span>Telefone/WhatsApp</span>
+          <span class="text-[#b3261e]">*</span>
+        </label>
+        <input
+          type="tel"
+          id="dl-phone"
+          name="phone"
+          required
+          placeholder="+00 (00) 00000-0000"
+          class="rounded-full border border-[#d1d5db] bg-white px-5 py-4 text-[14px] font-normal text-[#2f2019] placeholder:text-black/25 focus:border-gold focus:outline-none md:text-[16px]"
+        />
+      </div>
+    </div>
+
+    <!-- Privacy checkbox -->
+    <label class="flex cursor-pointer items-start gap-3 text-[15px] font-normal leading-[1.4] text-[#2f2019] md:items-center md:text-[16px]">
+      <input
+        type="checkbox"
+        name="privacy"
+        required
+        class="peer sr-only"
+      />
+      <span
+        aria-hidden="true"
+        class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded bg-mute text-white peer-checked:bg-gold peer-focus-visible:ring-2 peer-focus-visible:ring-gold/40 md:mt-0"
+      >
+        <Icon name="check" size={14} class="hidden peer-checked:block" />
+      </span>
+      <span>
+        Li e concordo com a <a href="/privacidade" class="underline">Política de Privacidade</a>.
+      </span>
+    </label>
+
+    <button
+      type="submit"
+      class="btn btn-primary btn-md w-full"
+    >
+      <span>Baixar agora</span>
+      <Icon name="download" size={20} />
+    </button>
+  </form>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('download-popup') as HTMLDialogElement | null;
+  const form = document.getElementById('download-form') as HTMLFormElement | null;
+  const closeBtn = document.querySelector<HTMLButtonElement>('.download-popup-close');
+
+  if (dialog && form) {
+    let pendingFileUrl = '';
+    let pendingFileName = '';
+
+    document
+      .querySelectorAll<HTMLButtonElement>('.material-download-trigger')
+      .forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          pendingFileUrl = trigger.dataset.fileUrl ?? '';
+          pendingFileName = trigger.dataset.fileName ?? '';
+          dialog.showModal();
+        });
+      });
+
+    closeBtn?.addEventListener('click', () => dialog.close());
+
+    // Click outside to close
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // TODO: post form data to backend / lead capture before download.
+
+      if (pendingFileUrl) {
+        const link = document.createElement('a');
+        link.href = pendingFileUrl;
+        link.download = pendingFileName || '';
+        link.rel = 'noopener';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      form.reset();
+      dialog.close();
+    });
+  }
+</script>

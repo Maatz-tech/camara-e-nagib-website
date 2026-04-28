@@ -1,0 +1,65 @@
+---
+type Pillar = {
+  title: string;
+  description?: string;
+  bullets?: string[];
+};
+
+const pillars: Pillar[] = [
+  {
+    title: 'Missão',
+    description:
+      'Conduzir decisões jurídicas que protegem patrimônio, antecipando riscos e garantindo segurança e previsibilidade.',
+  },
+  {
+    title: 'Visão',
+    description:
+      'Atuar como referência em decisões patrimoniais e imobiliárias de alto impacto em Natal/RN.',
+  },
+  {
+    title: 'Valores',
+    bullets: [
+      'Atuar com estratégia antes do risco.',
+      'Clareza e precisão jurídica.',
+      'Proteção patrimonial como prioridade.',
+    ],
+  },
+];
+---
+
+<section class="w-full border-b border-gold-5 bg-[#f9fafb]">
+  <div
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 pt-12 pb-12 md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <h2
+      class="text-center text-[32px] font-normal leading-tight text-[#2f2019] md:text-[48px] md:leading-[48px]"
+    >
+      Nossos pilares
+    </h2>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        pillars.map((p) => (
+          <article class="flex flex-col gap-6 rounded-2xl border border-mute bg-white p-7 md:p-8">
+            <h3
+              class="italic text-[28px] font-semibold text-navy md:text-[36px]"
+              style="font-family: var(--font-serif);"
+            >
+              {p.title}
+            </h3>
+            {p.description && (
+              <p class="text-[15px] font-medium leading-[1.5] text-[#33261d] md:text-[16px]">
+                {p.description}
+              </p>
+            )}
+            {p.bullets && (
+              <ul class="flex list-disc flex-col gap-1 pl-6 text-[15px] font-medium leading-[1.5] text-[#33261d] md:text-[16px]">
+                {p.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

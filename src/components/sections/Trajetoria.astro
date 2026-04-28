@@ -1,0 +1,111 @@
+---
+const image1 = '/images/sobre/trajetoria-1.webp';
+const image2 = '/images/sobre/trajetoria-2.webp';
+---
+
+<section class="w-full border-b border-gold-5 bg-white">
+  <div
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 pt-12 pb-12 md:flex-row md:items-start md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <!-- Bento grid: 2 photos + 2 stat cards -->
+    <div class="flex w-full flex-col gap-4 md:w-[536px] md:shrink-0">
+      <div class="flex gap-4">
+        <div
+          class="relative h-[140px] w-3/5 overflow-hidden rounded-2xl bg-mist md:h-[180px] md:w-[318px]"
+        >
+          <img
+            src={image1}
+            alt=""
+            aria-hidden="true"
+            class="absolute inset-0 h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+        <div
+          class="relative flex flex-1 flex-col justify-center overflow-hidden rounded-2xl bg-gold p-5 md:p-8"
+        >
+          <span
+            class="pointer-events-none absolute right-0 top-0 h-full w-1/2 select-none text-[120px] font-bold leading-none text-white/15 md:text-[160px]"
+            aria-hidden="true"
+          >
+            C
+          </span>
+          <p
+            class="relative text-[28px] font-bold leading-9 text-white md:text-[36px] md:leading-10"
+          >
+            20+
+          </p>
+          <p
+            class="relative mt-2 text-[12px] font-medium uppercase leading-5 tracking-[1.4px] text-white/80 md:text-[14px]"
+          >
+            Anos de Experiência<br /> Somados
+          </p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div
+          class="relative flex flex-1 flex-col justify-center overflow-hidden rounded-2xl bg-navy p-5 md:p-8"
+        >
+          <span
+            class="pointer-events-none absolute right-0 top-0 h-full w-1/2 select-none text-[120px] font-bold leading-none text-white/15 md:text-[160px]"
+            aria-hidden="true"
+          >
+            N
+          </span>
+          <p
+            class="relative text-[28px] font-bold leading-9 text-white md:text-[36px] md:leading-10"
+          >
+            500+
+          </p>
+          <p
+            class="relative mt-2 text-[12px] font-medium uppercase leading-5 tracking-[1.4px] text-white/80 md:text-[14px]"
+          >
+            Clientes Atendidos
+          </p>
+        </div>
+        <div
+          class="relative h-[140px] w-3/5 overflow-hidden rounded-2xl bg-mist md:h-[180px] md:w-[318px]"
+        >
+          <img
+            src={image2}
+            alt=""
+            aria-hidden="true"
+            class="absolute inset-0 h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Copy -->
+    <div class="flex flex-1 flex-col gap-6">
+      <h2
+        class="text-[#2f2019] text-[28px] font-medium leading-tight tracking-[-1px] md:text-[32px] md:tracking-[-1.5px]"
+      >
+        Nossa trajetória
+      </h2>
+
+      <div
+        class="flex flex-col gap-4 text-[15px] font-normal leading-[1.6] text-[#2f2019] md:text-[18px]"
+      >
+        <p>
+          Fundado por Ana Carolina Nagib e Rafaela Câmara, o escritório surgiu
+          da integração entre Direito Imobiliário e Direito de Família, com
+          foco na proteção patrimonial e na condução estratégica de decisões
+          relevantes.
+        </p>
+        <p>
+          Com atuação em Natal/RN, o escritório atende investidores, famílias e
+          empresas que buscam segurança jurídica, mitigação de riscos e
+          previsibilidade em operações que envolvem patrimônio.
+        </p>
+        <p>
+          O modelo de trabalho prioriza análise estratégica antes da execução,
+          com condução direta das sócias em demandas que exigem critério,
+          precisão e impacto financeiro.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

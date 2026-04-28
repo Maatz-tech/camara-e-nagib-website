@@ -1,0 +1,108 @@
+---
+import Icon from '../Icon.astro';
+
+const ctaHref = '/contato';
+
+const leaders = [
+  {
+    name: 'Rafaela Câmara',
+    role: 'Advogada — OAB/RN 13.380',
+    image: '/images/leaders/rafaela.webp',
+    linkedin: '#',
+  },
+  {
+    name: 'Ana Carolina Nagib',
+    role: 'Advogada — OAB/RN 5.438',
+    image: '/images/leaders/ana-carolina.webp',
+    linkedin: '#',
+  },
+];
+
+const bullets = [
+  'Proteção Patrimonial e Planejamento Familiar;',
+  'Decisões imobiliárias com segurança jurídica;',
+  'Estratégia antes do risco',
+];
+---
+
+<section
+  id="liderancas"
+  class="w-full border-b border-gold-5 bg-mist"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 pt-12 pb-12 md:flex-row md:items-start md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <!-- Left column -->
+    <div class="flex flex-1 flex-col items-start gap-6">
+      <span class="eyebrow eyebrow-pill">nossas lideranças</span>
+
+      <p
+        class="text-[18px] font-medium leading-[28px] text-[#33261d] md:text-[22px] md:leading-[32.5px]"
+      >
+        Nossa atuação é conduzida diretamente pelas sócias em cada etapa
+        relevante. Cada caso é analisado com critério técnico e visão
+        estratégica, considerando riscos e impacto patrimonial.
+      </p>
+
+      <ul class="flex flex-col gap-3 py-2 md:gap-4 md:py-5">
+        {
+          bullets.map((item) => (
+            <li class="flex items-center gap-3.5">
+              <Icon name="check-circle" size={20} class="text-gold" />
+              <span class="text-[15px] font-medium leading-6 text-[#2f2019] md:text-[16px]">
+                {item}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a href={ctaHref} class="btn btn-primary btn-md mt-2">
+        <span>Agendar Consultoria</span>
+        <Icon name="arrow-right" size={20} />
+      </a>
+    </div>
+
+    <!-- Right: leader cards -->
+    <div class="flex w-full gap-4 md:w-auto md:gap-5">
+      {
+        leaders.map((leader) => (
+          <article class="relative aspect-[276/415] flex-1 overflow-hidden rounded-[25px] md:w-[276px] md:flex-none">
+            <img
+              src={leader.image}
+              alt={leader.name}
+              class="absolute inset-0 h-full w-full object-cover object-center"
+              width="276"
+              height="415"
+              loading="lazy"
+            />
+            <div
+              class="absolute inset-0 pointer-events-none"
+              style="background: linear-gradient(180deg, rgba(39,57,97,0.2) 0%, rgba(39,57,97,0) 42.8%, rgba(39,57,97,0) 69.7%, rgb(39,57,97) 100%);"
+            >
+            </div>
+            <div class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 p-4 md:p-6">
+              <div class="flex flex-col gap-0.5 text-white">
+                <p class="text-[14px] font-bold leading-tight tracking-[-0.3px] md:text-[16px]">
+                  {leader.name}
+                </p>
+                <p class="text-[11px] font-medium leading-tight md:text-[12px]">
+                  {leader.role}
+                </p>
+              </div>
+              <a
+                href={leader.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`LinkedIn de ${leader.name}`}
+                class="flex size-[34px] shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30 md:size-[38px]"
+              >
+                <Icon name="linkedin" size={14} />
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

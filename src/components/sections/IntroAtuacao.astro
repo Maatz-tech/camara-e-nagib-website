@@ -1,0 +1,89 @@
+---
+interface Props {
+  titleStart: string;
+  titleEmphasis: string;
+  description: string[];
+  image1: string;
+  image2: string;
+  logo?: string;
+}
+
+const {
+  titleStart,
+  titleEmphasis,
+  description,
+  image1,
+  image2,
+  logo,
+} = Astro.props;
+---
+
+<section class="w-full border-b border-gold-5 bg-white">
+  <div
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 pt-12 pb-12 md:flex-row md:items-start md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <!-- Image collage -->
+    <div class="relative shrink-0 self-center md:self-start">
+      <div class="relative h-[300px] w-[280px] md:h-[352px] md:w-[504px]">
+        <!-- Photo 1 (top-left) -->
+        <div
+          class="absolute left-0 top-0 h-[200px] w-[160px] overflow-hidden rounded-2xl md:h-[300px] md:w-[240px]"
+        >
+          <img
+            src={image1}
+            alt=""
+            aria-hidden="true"
+            class="h-full w-full object-cover object-bottom"
+            loading="lazy"
+          />
+        </div>
+        <!-- Photo 2 (bottom-right, offset) -->
+        <div
+          class="absolute right-0 top-[80px] h-[200px] w-[160px] overflow-hidden rounded-2xl md:right-0 md:top-[32px] md:h-[300px] md:w-[240px]"
+        >
+          <img
+            src={image2}
+            alt=""
+            aria-hidden="true"
+            class="h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+        <!-- Logo overlay -->
+        {
+          logo && (
+            <div class="absolute left-[140px] top-[230px] flex size-14 items-center justify-center md:left-[212px] md:top-[272px] md:size-20">
+              <img
+                src={logo}
+                alt="Câmara & Nagib"
+                class="h-full w-full"
+                loading="lazy"
+              />
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- Copy -->
+    <div class="flex flex-1 flex-col gap-6">
+      <h2
+        class="text-[#2f2019] text-[28px] leading-tight tracking-[-0.8px] md:text-[32px] md:tracking-[-1.2px]"
+      >
+        <span class="font-normal">{titleStart}</span>
+        <span
+          class="block italic text-gold md:text-[40px]"
+          style="font-family: var(--font-serif); font-weight: 500;"
+        >
+          {titleEmphasis}
+        </span>
+      </h2>
+
+      <div
+        class="flex flex-col gap-4 text-[15px] font-normal leading-[1.6] text-[#2f2019] md:text-[18px]"
+      >
+        {description.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </div>
+</section>

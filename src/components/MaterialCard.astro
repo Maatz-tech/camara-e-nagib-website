@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  category: string;
+  title: string;
+  image: string;
+  fileUrl: string;
+  fileName?: string;
+}
+
+const { category, title, image, fileUrl, fileName } = Astro.props;
+---
+
+<article class="flex w-full flex-col gap-6">
+  <div
+    class="relative h-[200px] w-full overflow-hidden rounded-2xl bg-gold-10 shadow-sm md:h-[220px]"
+  >
+    <img
+      src={image}
+      alt={title}
+      class="absolute inset-0 h-full w-full object-cover"
+      loading="lazy"
+    />
+  </div>
+  <div class="flex flex-col gap-3.5">
+    <span class="text-[12px] font-bold uppercase leading-4 tracking-[0.5px] text-gold md:text-[14px]">
+      {category}
+    </span>
+    <h3
+      class="line-clamp-3 h-[68px] text-[18px] font-semibold leading-tight text-[#2f2019] md:h-[75px] md:text-[20px]"
+    >
+      {title}
+    </h3>
+  </div>
+  <button
+    type="button"
+    class="material-download-trigger inline-flex items-center justify-center gap-3 self-start rounded-full border border-gold bg-white px-10 py-2.5 text-[16px] font-semibold leading-7 text-gold transition-colors hover:bg-gold hover:text-white md:text-[18px]"
+    data-file-url={fileUrl}
+    data-file-name={fileName ?? ''}
+    data-material-title={title}
+  >
+    <span>Baixar</span>
+    <Icon name="download" size={20} />
+  </button>
+</article>

@@ -1,0 +1,77 @@
+---
+import Icon from '../Icon.astro';
+
+const ctaPrimaryHref = '/contato';
+const ctaSecondaryHref = '/#atuacoes';
+---
+
+<section
+  id="hero"
+  class="relative w-full border-b border-gold-5 bg-[#f9f7f2]"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1440px] flex-col items-stretch gap-8 px-6 pt-10 pb-12 md:flex-row md:items-center md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <!-- Copy + CTAs (left on desktop) -->
+    <div class="flex w-full flex-col items-start md:flex-1">
+      <span class="eyebrow eyebrow-pill">Consultoria jurídica</span>
+
+      <h1
+        class="mt-5 font-medium text-[#2f2019] text-[36px] leading-[44px] tracking-[-1px] md:mt-6 md:text-[64px] md:leading-[80px] md:tracking-[-1.5px]"
+      >
+        Estratégia jurídica para
+        <span
+          class="block italic text-gold md:inline"
+          style="font-family: var(--font-serif); font-weight: 500;"
+        >
+          proteger o que importa
+        </span>
+      </h1>
+
+      <p
+        class="mt-4 max-w-[576px] text-[16px] font-normal leading-[26px] text-[#33261d] md:mt-6 md:text-[18px] md:leading-[30px]"
+      >
+        Atuação integrada em Direito de Família, Sucessões e Imobiliário para
+        organizar, proteger e estruturar seu patrimônio com clareza e
+        segurança.
+      </p>
+
+      <!-- Mobile-only image, between paragraph and buttons -->
+      <img
+        src="/images/hero/hero-image.webp"
+        alt="Sócias Ana Carolina Nagib e Rafaela Câmara"
+        class="mt-8 h-auto w-full md:hidden"
+        width="1164"
+        height="1102"
+        loading="eager"
+        fetchpriority="high"
+      />
+
+      <div class="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-10 md:gap-4">
+        <a href={ctaPrimaryHref} class="btn btn-primary btn-md">
+          <span>Agendar Consultoria</span>
+          <Icon name="arrow-right" size={20} />
+        </a>
+        <a
+          href={ctaSecondaryHref}
+          class="btn btn-md inline-flex items-center justify-center rounded-full border border-gold-30 bg-white text-[#2f2019] transition-colors hover:bg-gold-5"
+        >
+          Nossas Atuações
+        </a>
+      </div>
+    </div>
+
+    <!-- Desktop-only image (right column) -->
+    <div class="hidden md:flex md:flex-1 md:justify-end">
+      <img
+        src="/images/hero/hero-image.webp"
+        alt="Sócias Ana Carolina Nagib e Rafaela Câmara"
+        class="h-auto w-full max-w-[582px]"
+        width="1164"
+        height="1102"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </div>
+</section>

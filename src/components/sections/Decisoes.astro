@@ -1,0 +1,65 @@
+---
+import DecisoesBlock from './DecisoesBlock.astro';
+
+const imobiliaria = {
+  eyebrow: 'Decisões de Alto Impacto',
+  title: 'Estratégia Imobiliária',
+  items: [
+    {
+      title: 'Consultoria Imobiliária e Patrimonial',
+      tags: ['INVESTIDORES', 'MITIGAÇÃO DE RISCO', 'ESTRATÉGICO'],
+      description:
+        'Diagnóstico jurídico para antecipação de riscos e definição de estratégias que protegem o patrimônio.',
+    },
+    {
+      title: 'Investimentos Imobiliários',
+      tags: ['RECORRENTE', 'PREVENTIVO', 'CORPORATIVO'],
+      description:
+        'Análise jurídica de ativos com foco na mitigação de riscos e proteção do capital.',
+    },
+    {
+      title: 'Regularização de Imóveis',
+      tags: ['USUCAPIÃO', 'ASSESSORIA', 'VALORIZAÇÃO'],
+      description:
+        'Estruturação jurídica para viabilizar operações e garantir segurança patrimonial.',
+    },
+  ],
+};
+
+const familia = {
+  eyebrow: 'Proteção e Segurança',
+  title: 'Planejamento & Família',
+  items: [
+    {
+      title: 'Consultoria Estratégica Patrimonial',
+      tags: ['DIREITO DE FAMÍLIA', 'ESTRATÉGIA', 'MITIGAÇÃO DE RISCO'],
+      description:
+        'Consultoria personalizada com diagnóstico completo da situação patrimonial para identificar riscos e fornecer direcionamento estratégico claro.',
+    },
+    {
+      title: 'Planejamento Sucessório',
+      tags: ['HOLDING', 'INVENTÁRIO', 'LEGADO'],
+      description:
+        'Organização patrimonial para continuidade do legado com estrutura jurídica sólida e previsível.',
+    },
+    {
+      title: 'Pacto Antenupcial e Proteção',
+      tags: ['MATRIMONIAL', 'INTELIGÊNCIA', 'PROTEÇÃO'],
+      description:
+        'Definição inteligente de regras patrimoniais para garantir proteção, autonomia e clareza nas relações.',
+    },
+  ],
+};
+---
+
+<section
+  id="atuacoes"
+  class="w-full border-b border-gold-5 bg-white"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-16 px-6 pt-12 pb-12 md:gap-24 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <DecisoesBlock {...imobiliaria} />
+    <DecisoesBlock {...familia} />
+  </div>
+</section>

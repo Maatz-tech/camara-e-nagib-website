@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import Sobre from '../components/sections/Sobre.astro';
+import Liderancas from '../components/sections/Liderancas.astro';
+import Decisoes from '../components/sections/Decisoes.astro';
+import PorQueConfiar from '../components/sections/PorQueConfiar.astro';
+import Depoimentos from '../components/sections/Depoimentos.astro';
+import CtaFinal from '../components/sections/CtaFinal.astro';
+---
+
+<Base
+  title="Câmara & Nagib Advogados Associados — Estratégia jurídica para proteger o que importa"
+  description="Consultoria jurídica de alto impacto em Direito de Família, Sucessões e Imobiliário. Atuação integrada para organizar, proteger e estruturar seu patrimônio com clareza e segurança."
+>
+  <Header />
+
+  <main id="main-content">
+    <Hero />
+    <Sobre />
+    <Liderancas />
+    <Decisoes />
+    <PorQueConfiar />
+    <Depoimentos />
+    <CtaFinal />
+  </main>
+
+  <Footer />
+</Base>

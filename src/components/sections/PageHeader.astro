@@ -1,0 +1,74 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  watermark?: string;
+  align?: 'left' | 'center';
+  watermarkPosition?: 'right' | 'center';
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  watermark,
+  align = 'left',
+  watermarkPosition = 'right',
+} = Astro.props;
+
+const watermarkClasses =
+  watermarkPosition === 'center'
+    ? 'pointer-events-none absolute left-1/2 top-1/2 hidden h-[180%] w-auto -translate-x-1/2 -translate-y-1/2 select-none md:block'
+    : 'pointer-events-none absolute right-0 top-1/2 hidden h-[180%] w-auto -translate-y-1/2 select-none md:block';
+
+const isCenter = align === 'center';
+const hasTitleSlot = Astro.slots.has('title');
+---
+
+<section class="relative w-full overflow-hidden bg-[#f9f7f2]">
+  {
+    watermark && (
+      <img
+        src={watermark}
+        alt=""
+        aria-hidden="true"
+        class={watermarkClasses}
+      />
+    )
+  }
+
+  <div
+    class:list={[
+      'relative mx-auto flex w-full max-w-[1440px] items-center px-6 py-10 md:px-[120px] md:py-16',
+    ]}
+  >
+    <div
+      class:list={[
+        'flex flex-1 flex-col gap-4 md:gap-6 md:max-w-[896px]',
+        isCenter ? 'items-center text-center mx-auto' : 'items-start',
+      ]}
+    >
+      {eyebrow && <span class="eyebrow eyebrow-pill bg-[#f1ece2]">{eyebrow}</span>}
+      {
+        hasTitleSlot ? (
+          <slot name="title" />
+        ) : (
+          <h1
+            class="italic font-medium text-[#2f2019] text-[36px] leading-tight tracking-[-1px] md:text-[48px] md:tracking-[-1.2px]"
+            style="font-family: var(--font-serif);"
+          >
+            {title}
+          </h1>
+        )
+      }
+      {
+        subtitle && (
+          <p class="text-[16px] font-normal leading-7 text-[#33261d] md:text-[18px]">
+            {subtitle}
+          </p>
+        )
+      }
+    </div>
+  </div>
+</section>

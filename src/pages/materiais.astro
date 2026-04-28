@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/sections/PageHeader.astro';
+import MaterialCard from '../components/MaterialCard.astro';
+import DownloadPopup from '../components/DownloadPopup.astro';
+
+const IMG_BASE = '/images/materiais';
+const FILE_BASE = '/images/materiais/downloads';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://camaraenagib.adv.br/' },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Materiais Gratuitos',
+      item: 'https://camaraenagib.adv.br/materiais',
+    },
+  ],
+};
+
+const materials = [
+  {
+    category: 'ebook',
+    title: 'Requisitos para um contrato de compra e venda',
+    image: `${IMG_BASE}/ebook-1.webp`,
+    fileUrl: `${FILE_BASE}/contrato-compra-e-venda.pdf`,
+    fileName: 'contrato-compra-e-venda.pdf',
+  },
+  {
+    category: 'ebook',
+    title: 'O que acontece se eu denunciar?',
+    image: `${IMG_BASE}/ebook-2.webp`,
+    fileUrl: `${FILE_BASE}/o-que-acontece-se-eu-denunciar.pdf`,
+    fileName: 'o-que-acontece-se-eu-denunciar.pdf',
+  },
+  {
+    category: 'ebook',
+    title: 'Não é amor, é cilada: violência doméstica',
+    image: `${IMG_BASE}/ebook-3.webp`,
+    fileUrl: `${FILE_BASE}/violencia-domestica.pdf`,
+    fileName: 'violencia-domestica.pdf',
+  },
+];
+---
+
+<Base
+  title="Materiais Gratuitos | Câmara & Nagib Advogados Associados"
+  description="Encontre os melhores conteúdos jurídicos para baixar gratuitamente — ebooks, guias e materiais práticos."
+  jsonLd={jsonLd}
+>
+  <Header />
+
+  <main id="main-content">
+    <PageHeader
+      title="Materiais gratuitos"
+      subtitle="Encontre os melhores conteúdos para baixar gratuitamente"
+      align="center"
+      watermark="/images/materiais/page-header-watermark.svg"
+      watermarkPosition="center"
+    />
+
+    <section class="w-full bg-white">
+      <div
+        class="mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-x-6 gap-y-12 px-6 pt-12 pb-12 sm:grid-cols-2 md:px-[120px] md:pt-20 md:pb-20 lg:grid-cols-3"
+      >
+        {materials.map((m) => <MaterialCard {...m} />)}
+      </div>
+    </section>
+  </main>
+
+  <DownloadPopup />
+  <Footer />
+</Base>

@@ -1,0 +1,125 @@
+---
+import Icon from './Icon.astro';
+
+const navLinks = [
+  { href: '/', label: 'Início' },
+  { href: '/sobre', label: 'Sobre' },
+  { href: '/#atuacoes', label: 'Atuações' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/materiais', label: 'Ebook' },
+];
+
+const ctaHref = '/contato';
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => {
+  if (href.includes('#')) return false;
+  const path = href.replace(/\/$/, '') || '/';
+  if (path === '/') return currentPath === '/';
+  return currentPath === path || currentPath.startsWith(path + '/');
+};
+---
+
+<header
+  class="sticky top-0 z-50 w-full border-b border-gold-10 bg-white/90 backdrop-blur-md"
+>
+  <nav
+    class="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between px-6 md:px-[120px]"
+    aria-label="Navegação principal"
+  >
+    <!-- Logo -->
+    <a href="/" class="flex items-center" aria-label="Câmara & Nagib — Início">
+      <img
+        src="/images/logo-dark.webp"
+        alt="Câmara & Nagib Advocacia Especializada"
+        width="125"
+        height="40"
+        class="h-10 w-[125px] object-contain"
+      />
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden items-center gap-8 md:flex">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'text-[14px] font-medium leading-5 transition-colors hover:text-gold',
+                isActive(link.href) ? 'text-gold' : 'text-navy',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href={ctaHref} class="btn btn-primary btn-sm">
+          <span>Falar com Especialista</span>
+          <Icon name="arrow-right-sm" size={16} />
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile trigger -->
+    <button
+      id="menu-toggle"
+      type="button"
+      class="flex size-10 items-center justify-center text-navy md:hidden"
+      aria-label="Abrir menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <Icon name="menu" size={24} class="menu-icon-open" />
+      <Icon name="close" size={24} class="menu-icon-close hidden" />
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-gold-10 bg-white md:hidden"
+  >
+    <ul class="flex flex-col gap-1 px-6 py-4">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'block rounded-md px-2 py-3 text-[15px] font-medium transition-colors hover:bg-gold-5 hover:text-gold',
+                isActive(link.href) ? 'text-gold' : 'text-navy',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="pt-2">
+        <a href={ctaHref} class="btn btn-primary btn-sm w-full">
+          <span>Falar com Especialista</span>
+          <Icon name="arrow-right-sm" size={16} />
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = toggle?.querySelector('.menu-icon-open');
+  const iconClose = toggle?.querySelector('.menu-icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    toggle.setAttribute('aria-label', !isOpen ? 'Fechar menu' : 'Abrir menu');
+  });
+</script>

@@ -1,0 +1,129 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = 'Câmara & Nagib Advogados Associados — Consultoria jurídica de alto impacto em Direito de Família, Sucessões e Imobiliário.',
+  image = '/og-image.jpg',
+  noindex = false,
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+
+const siteName = 'Câmara & Nagib Advogados Associados';
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') || Astro.site!.href;
+const ogImage = new URL(image, Astro.site).href;
+
+const baseLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: siteName,
+  alternateName: 'Câmara & Nagib',
+  url: Astro.site!.href,
+  logo: new URL('/images/logo-dark.webp', Astro.site).href,
+  description,
+  areaServed: {
+    '@type': 'City',
+    name: 'Natal',
+    addressRegion: 'RN',
+    addressCountry: 'BR',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Natal',
+    addressRegion: 'RN',
+    addressCountry: 'BR',
+  },
+  email: 'contato@camaraenagib.adv.br',
+  telephone: '+55-84-99999-9999',
+  founder: [
+    { '@type': 'Person', name: 'Ana Carolina Nagib' },
+    { '@type': 'Person', name: 'Rafaela Câmara' },
+  ],
+  knowsAbout: [
+    'Direito Imobiliário',
+    'Direito de Família',
+    'Direito das Sucessões',
+    'Planejamento Patrimonial',
+    'Regularização de Imóveis',
+  ],
+};
+
+const structuredData = jsonLd
+  ? Array.isArray(jsonLd)
+    ? [baseLd, ...jsonLd]
+    : [baseLd, jsonLd]
+  : baseLd;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#a48550" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="pt_BR" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Fonts (preconnect for performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500&display=swap"
+    />
+
+    <!-- Structured Data -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body class="min-h-screen bg-white text-navy antialiased">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-navy focus:px-4 focus:py-2 focus:text-white"
+    >
+      Pular para o conteúdo
+    </a>
+    <slot />
+  </body>
+</html>

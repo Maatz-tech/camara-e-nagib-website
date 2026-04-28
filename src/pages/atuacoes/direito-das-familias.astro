@@ -1,0 +1,127 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHeader from '../../components/sections/PageHeader.astro';
+import IntroAtuacao from '../../components/sections/IntroAtuacao.astro';
+import DecisoesBlock from '../../components/sections/DecisoesBlock.astro';
+import OndeAtuamos from '../../components/sections/OndeAtuamos.astro';
+import CtaFinal from '../../components/sections/CtaFinal.astro';
+
+const ICON_BASE = '/images/atuacoes/direito-das-familias/icons';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Direito de Família',
+    provider: { '@type': 'LegalService', name: 'Câmara & Nagib Advogados Associados' },
+    areaServed: { '@type': 'City', name: 'Natal' },
+    description:
+      'Atuação em Direito das Famílias com técnica jurídica e sensibilidade — planejamento patrimonial, divórcio, guarda, pensão e curatela.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://camaraenagib.adv.br/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Direito das Famílias',
+        item: 'https://camaraenagib.adv.br/atuacoes/direito-das-familias',
+      },
+    ],
+  },
+];
+
+const planejamentoFamilia = {
+  eyebrow: 'Proteção e Segurança',
+  title: 'Planejamento & Família',
+  items: [
+    {
+      title: 'Consultoria Estratégica Patrimonial',
+      tags: ['DIREITO DE FAMÍLIA', 'ESTRATÉGIA', 'MITIGAÇÃO DE RISCO'],
+      description:
+        'Consultoria personalizada com diagnóstico completo da situação patrimonial para identificar riscos e fornecer direcionamento estratégico claro.',
+    },
+    {
+      title: 'Planejamento Sucessório',
+      tags: ['HOLDING', 'INVENTÁRIO', 'LEGADO'],
+      description:
+        'Organização patrimonial para continuidade do legado com estrutura jurídica sólida e previsível.',
+    },
+    {
+      title: 'Pacto Antenupcial e Proteção',
+      tags: ['MATRIMONIAL', 'INTELIGÊNCIA', 'PROTEÇÃO'],
+      description:
+        'Definição inteligente de regras patrimoniais para garantir proteção, autonomia e clareza nas relações.',
+    },
+  ],
+};
+
+const ondeAtuamosItems = [
+  {
+    icon: `${ICON_BASE}/heart-handshake.svg`,
+    title: 'Relacionamentos',
+    description:
+      'Atuamos na prevenção com o planejamento patrimonial, divórcios e dissoluções de união estável com partilha de bens de forma judicial e extrajudicial.',
+  },
+  {
+    icon: `${ICON_BASE}/baby.svg`,
+    title: 'Guarda',
+    description:
+      'Auxiliamos na elaboração do planejamento de parentalidade — regulando a convivência familiar, guarda e direitos de visita.',
+  },
+  {
+    icon: `${ICON_BASE}/calendar-check.svg`,
+    title: 'Pensão Alimentícia',
+    description:
+      'Atuamos na fixação de pensão alimentícia, bem como na execução, exoneração e revisão.',
+  },
+  {
+    icon: `${ICON_BASE}/users-round.svg`,
+    title: 'Interdição e Curatela',
+    description:
+      'Assessoramos nas ações que versam sobre interdição e curatela, incluindo a substituição.',
+  },
+];
+---
+
+<Base
+  title="Direito das Famílias | Câmara & Nagib Advogados Associados"
+  description="Atuação em Direito das Famílias com técnica jurídica e sensibilidade — planejamento patrimonial, divórcio, guarda, pensão e curatela."
+  jsonLd={jsonLd}
+>
+  <Header />
+
+  <main id="main-content">
+    <PageHeader
+      eyebrow="nossos serviços"
+      title="Direito das Famílias"
+      watermark="/images/atuacoes/direito-imobiliario/page-header-watermark.svg"
+    />
+    <IntroAtuacao
+      titleStart="Soluções jurídicas para"
+      titleEmphasis="proteger o que mais importa"
+      description={[
+        'Na Câmara e Nagib, atuamos em Direito das Famílias com uma abordagem que une técnica jurídica e sensibilidade, compreendendo que cada decisão envolve não apenas aspectos legais, mas também relações pessoais e patrimoniais relevantes.',
+        'Oferecemos assessoria completa para prevenção de conflitos, organização jurídica das relações familiares e condução segura de situações já estabelecidas, sempre com discrição, acolhimento e foco em soluções eficazes.',
+      ]}
+      image1="/images/atuacoes/direito-das-familias/intro-1.webp"
+      image2="/images/atuacoes/direito-das-familias/intro-2.webp"
+      logo="/images/atuacoes/direito-das-familias/intro-logo.svg"
+    />
+    <section class="w-full border-b border-gold-5 bg-white">
+      <div
+        class="mx-auto w-full max-w-[1440px] px-6 pt-12 pb-12 md:px-[120px] md:pt-20 md:pb-20"
+      >
+        <DecisoesBlock {...planejamentoFamilia} />
+      </div>
+    </section>
+    <OndeAtuamos items={ondeAtuamosItems} />
+    <CtaFinal />
+  </main>
+
+  <Footer />
+</Base>

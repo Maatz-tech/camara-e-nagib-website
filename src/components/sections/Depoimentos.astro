@@ -1,0 +1,82 @@
+---
+import Icon from '../Icon.astro';
+
+const testimonials = [
+  {
+    quote:
+      'A constância das nossas conversas às segundas-feiras passou a fazer falta quando não eram necessárias. Rafaela sempre foi extremamente disponível e prestativa, não apenas na parte jurídica, mas também no lado humano, sabendo ouvir, acolher e conduzir cada situação com muita paciência. Indico demais!',
+    name: 'Adrianny Reis',
+    role: 'Cliente',
+    rating: 5,
+  },
+  {
+    quote:
+      'Atendimento 100% eficaz e humanizado. Dúvidas sanadas, estratégias criadas. Nos sentimos bem seguros quanto ao atendimento da Dra. Carol. Gratidão a atenção de todos no escritório',
+    name: 'Jéssica Raianne',
+    role: 'Cliente',
+    rating: 5,
+  },
+  {
+    quote:
+      'Escritório que oferece um atendimento diferenciado! Não foi só um documento. Rafaela, além de ser muito competente, é atenciosa, prestativa e sabe ouvir e explicar tudo muito bem!',
+    name: 'Cristina Lima',
+    role: 'Cliente',
+    rating: 5,
+  },
+];
+
+const initial = (name: string) => name.trim().charAt(0).toUpperCase();
+---
+
+<section
+  id="depoimentos"
+  class="w-full border-b border-gold-5 bg-[#f9f7f2]"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1280px] flex-col gap-10 px-6 pt-12 pb-12 md:gap-14 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <!-- Header -->
+    <div class="flex flex-col items-center gap-4">
+      <span class="eyebrow eyebrow-pill">Depoimentos</span>
+      <h2
+        class="text-center font-medium text-[#2f2019] text-[28px] leading-9 tracking-[-0.6px] md:text-[36px] md:leading-10 md:tracking-[-0.9px]"
+      >
+        O que dizem nossos clientes
+      </h2>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        testimonials.map((t) => (
+          <article class="flex flex-col justify-between rounded-3xl border border-gold-5 bg-white p-6 md:p-[33px]">
+            <div class="flex flex-col gap-6 pb-6">
+              <Icon name="quote" size={32} class="text-gold" />
+              <p class="text-[15px] font-normal leading-[26px] text-[#2f2019] md:text-[16px]">
+                “{t.quote}”
+              </p>
+              <div class="flex gap-1 text-gold" aria-label={`${t.rating} de 5 estrelas`}>
+                {Array.from({ length: t.rating }).map(() => (
+                  <Icon name="star" size={16} />
+                ))}
+              </div>
+            </div>
+            <div class="flex items-center gap-4 border-t border-gold-10 pt-6">
+              <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-navy/5 text-[14px] font-bold text-[#2f2019]">
+                {initial(t.name)}
+              </span>
+              <div class="flex flex-col">
+                <p class="text-[14px] font-bold leading-5 tracking-[-0.35px] text-[#2f2019]">
+                  {t.name}
+                </p>
+                <p class="text-[12px] font-medium uppercase leading-4 tracking-[0.6px] text-gold">
+                  {t.role}
+                </p>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

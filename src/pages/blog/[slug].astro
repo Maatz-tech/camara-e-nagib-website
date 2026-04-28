@@ -1,0 +1,409 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+const currentIndex = sortedPosts.findIndex((p) => p.id === post.id);
+const prevPost =
+  currentIndex < sortedPosts.length - 1
+    ? sortedPosts[currentIndex + 1]
+    : null;
+const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+const relatedPosts = sortedPosts.filter((p) => p.id !== post.id).slice(0, 3);
+
+const formatDate = (dateStr: string) =>
+  new Date(dateStr).toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+
+const postUrl = new URL(`/blog/${post.id}`, Astro.site).href;
+const shareUrls = {
+  facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`,
+  linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`,
+  twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(post.data.title)}`,
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.data.title,
+    description: post.data.summary,
+    image: new URL(post.data.image, Astro.site).href,
+    datePublished: post.data.date,
+    author: { '@type': 'Person', name: post.data.author },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Câmara & Nagib Advogados Associados',
+      url: 'https://camaraenagib.adv.br',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://camaraenagib.adv.br/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://camaraenagib.adv.br/blog' },
+      { '@type': 'ListItem', position: 3, name: post.data.title, item: postUrl },
+    ],
+  },
+];
+---
+
+<Base
+  title={`${post.data.title} | Câmara & Nagib`}
+  description={post.data.summary}
+  image={post.data.image}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <Header />
+
+  <main id="main-content">
+    <!-- Post Hero -->
+    <section
+      class="relative overflow-hidden bg-[#f9f7f2]"
+    >
+      <div
+        class="mx-auto flex w-full max-w-[1280px] flex-col gap-8 px-6 pt-10 pb-12 md:flex-row md:items-start md:gap-12 md:px-[120px] md:pt-16 md:pb-16"
+      >
+        <div class="flex flex-1 flex-col gap-5 md:gap-6">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 text-[14px] font-semibold text-[#2f2019] transition-opacity hover:opacity-70"
+          >
+            <Icon name="chevron-left" size={14} />
+            <span>Voltar ao blog</span>
+          </a>
+
+          <span
+            class="self-start text-[12px] font-bold uppercase leading-4 tracking-[0.5px] text-gold"
+          >
+            {post.data.category}
+          </span>
+
+          <h1
+            class="text-[#2f2019] text-[28px] font-medium leading-[1.15] tracking-[-0.8px] md:text-[40px] md:tracking-[-1.2px]"
+          >
+            {post.data.title}
+          </h1>
+
+          {
+            post.data.tags.length > 0 && (
+              <div class="flex flex-wrap gap-2">
+                {post.data.tags.map((tag) => (
+                  <span class="inline-flex items-center rounded-full border border-gold-30 bg-white px-3 py-1 text-[12px] font-semibold uppercase tracking-[0.5px] text-gold">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )
+          }
+
+          <div class="flex items-center gap-2 text-[14px] text-[#2f2019]/70">
+            <Icon name="calendar" size={16} />
+            <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+          </div>
+        </div>
+
+        <div class="md:w-[480px] md:shrink-0">
+          <img
+            src={post.data.image}
+            alt={post.data.title}
+            class="h-auto w-full rounded-2xl object-cover md:h-[280px]"
+            width="960"
+            height="500"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Article Body -->
+    <article class="w-full bg-white">
+      <div
+        class="mx-auto w-full max-w-[760px] px-6 pt-12 pb-16 md:pt-16 md:pb-20"
+      >
+        <div class="blog-prose flex flex-col gap-6">
+          <Content />
+        </div>
+
+        <hr class="my-10 border-t border-gold-10 md:my-12" />
+
+        <!-- Author + Share -->
+        <div
+          class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"
+        >
+          <div class="flex items-center gap-3">
+            <img
+              src={post.data.authorImage}
+              alt={post.data.author}
+              class="size-10 rounded-full object-cover md:size-11"
+              loading="lazy"
+              width="44"
+              height="44"
+            />
+            <span class="text-[16px] font-semibold text-[#2f2019] md:text-[18px]">
+              {post.data.author}
+            </span>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <span class="text-[14px] font-medium text-[#2f2019] md:text-[16px]">
+              Compartilhe
+            </span>
+            <div class="flex items-center gap-2.5">
+              <a
+                href={shareUrls.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Compartilhar no Facebook"
+                class="flex size-9 items-center justify-center rounded-full bg-navy text-white transition-opacity hover:opacity-80"
+              >
+                <Icon name="facebook" size={16} />
+              </a>
+              <a
+                href={shareUrls.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Compartilhar no LinkedIn"
+                class="flex size-9 items-center justify-center rounded-full bg-navy text-white transition-opacity hover:opacity-80"
+              >
+                <Icon name="linkedin" size={16} />
+              </a>
+              <a
+                href={shareUrls.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Compartilhar no X"
+                class="flex size-9 items-center justify-center rounded-full bg-navy text-white transition-opacity hover:opacity-80"
+              >
+                <Icon name="twitter-x" size={16} />
+              </a>
+              <button
+                type="button"
+                id="copy-link-btn"
+                aria-label="Copiar link"
+                data-url={postUrl}
+                class="flex size-9 items-center justify-center rounded-full bg-navy text-white transition-opacity hover:opacity-80"
+              >
+                <Icon name="link" size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-10 border-t border-gold-10 md:my-12" />
+
+        <!-- Prev/Next -->
+        <nav class="flex items-center justify-between gap-4">
+          {
+            prevPost ? (
+              <a
+                href={`/blog/${prevPost.id}`}
+                class="inline-flex items-center gap-2 text-[15px] font-semibold text-[#2f2019] transition-opacity hover:opacity-70 md:text-[17px]"
+              >
+                <Icon name="chevron-left" size={14} />
+                <span>Anterior</span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+          {
+            nextPost ? (
+              <a
+                href={`/blog/${nextPost.id}`}
+                class="inline-flex items-center gap-2 text-[15px] font-semibold text-[#2f2019] transition-opacity hover:opacity-70 md:text-[17px]"
+              >
+                <span>Próximo</span>
+                <Icon name="chevron-right" size={14} />
+              </a>
+            ) : (
+              <span />
+            )
+          }
+        </nav>
+      </div>
+    </article>
+
+    <!-- Related Posts -->
+    {
+      relatedPosts.length > 0 && (
+        <section class="w-full border-t border-gold-5 bg-[#f9f7f2]">
+          <div class="mx-auto flex w-full max-w-[1280px] flex-col gap-8 px-6 pt-12 pb-16 md:gap-12 md:px-[120px] md:pt-16 md:pb-20">
+            <div class="flex flex-col items-center gap-4 md:flex-row md:items-end md:justify-between">
+              <h2 class="text-center text-[26px] font-medium leading-tight tracking-[-0.6px] text-[#2f2019] md:text-left md:text-[36px] md:tracking-[-0.9px]">
+                Leia mais artigos
+              </h2>
+              <a
+                href="/blog"
+                class="inline-flex items-center gap-2 rounded-full border border-gold px-6 py-2.5 text-[14px] font-semibold text-gold transition-colors hover:bg-gold hover:text-white md:text-[16px]"
+              >
+                <span>Ver todos</span>
+                <Icon name="arrow-right" size={18} />
+              </a>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedPosts.map((p) => (
+                <BlogCard
+                  slug={p.id}
+                  title={p.data.title}
+                  summary={p.data.summary}
+                  image={p.data.image}
+                  category={p.data.category}
+                  date={p.data.date}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  const copyBtn = document.getElementById('copy-link-btn');
+  copyBtn?.addEventListener('click', async () => {
+    const url = copyBtn.getAttribute('data-url');
+    if (!url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+  });
+</script>
+
+<style>
+  .blog-prose :global(p) {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #2f2019;
+    font-weight: 400;
+    margin: 0;
+  }
+  .blog-prose :global(h2) {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2f2019;
+    line-height: 1.3;
+    margin: 24px 0 0;
+    letter-spacing: -0.4px;
+  }
+  .blog-prose :global(h3) {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2f2019;
+    line-height: 1.3;
+    margin: 16px 0 0;
+  }
+  .blog-prose :global(h4) {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2f2019;
+    line-height: 1.3;
+    margin: 8px 0 0;
+  }
+  .blog-prose :global(strong) {
+    font-weight: 600;
+    color: #2f2019;
+  }
+  .blog-prose :global(a) {
+    color: #a48550;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  .blog-prose :global(a:hover) {
+    opacity: 0.8;
+  }
+  .blog-prose :global(ul),
+  .blog-prose :global(ol) {
+    margin: 0;
+    padding-left: 24px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #2f2019;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .blog-prose :global(blockquote) {
+    margin: 0;
+    padding: 16px 20px;
+    border-left: 3px solid #a48550;
+    background: rgba(164, 133, 80, 0.05);
+    font-style: italic;
+    color: #2f2019;
+    border-radius: 0 8px 8px 0;
+  }
+  .blog-prose :global(code) {
+    font-size: 14px;
+    background-color: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .blog-prose :global(pre) {
+    margin: 0;
+    padding: 16px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  .blog-prose :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  @media (min-width: 768px) {
+    .blog-prose :global(p) {
+      font-size: 17px;
+    }
+    .blog-prose :global(h2) {
+      font-size: 28px;
+    }
+    .blog-prose :global(h3) {
+      font-size: 22px;
+    }
+  }
+</style>

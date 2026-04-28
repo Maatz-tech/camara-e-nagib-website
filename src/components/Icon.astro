@@ -1,0 +1,16 @@
+---
+interface Props {
+  name: string;
+  size?: number | string;
+  class?: string;
+}
+
+const { name, size = 20, class: className = '' } = Astro.props;
+const sizeValue = typeof size === 'number' ? `${size}px` : size;
+---
+
+<span
+  class:list={['icon', className]}
+  style={`--icon-url: url(/icons/${name}.svg); --icon-size: ${sizeValue};`}
+  aria-hidden="true"
+></span>

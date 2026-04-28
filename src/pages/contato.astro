@@ -1,0 +1,307 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/sections/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+
+const contact = {
+  address: 'Natal, RN — Brasil',
+  phone: '(84) 99999-9999',
+  email: 'contato@camaraenagib.adv.br',
+  hours: 'Seg. a Sex. — 9h às 18h',
+};
+
+const phoneDigits = contact.phone.replace(/\D/g, '');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  url: 'https://camaraenagib.adv.br/contato',
+  name: 'Contato | Câmara & Nagib Advogados Associados',
+};
+---
+
+<Base
+  title="Contato | Câmara & Nagib Advogados Associados"
+  description="Agende uma reunião estratégica com a Câmara & Nagib. Atendimento em Natal/RN para Direito Imobiliário, Direito de Família, Sucessões e Planejamento Patrimonial."
+  jsonLd={jsonLd}
+>
+  <Header />
+
+  <main id="main-content">
+    <PageHeader
+      eyebrow="contato"
+      title="Vamos conversar sobre o seu caso"
+      subtitle="Agende uma reunião estratégica para entendermos suas necessidades e desenharmos a melhor abordagem jurídica para o seu patrimônio."
+      align="center"
+      watermark="/images/sobre/page-header-watermark.svg"
+      watermarkPosition="center"
+    />
+
+    <section class="w-full bg-white">
+      <div
+        class="mx-auto grid w-full max-w-[1280px] grid-cols-1 gap-12 px-6 pt-12 pb-16 md:grid-cols-[5fr_7fr] md:gap-16 md:px-[120px] md:pt-16 md:pb-20"
+      >
+        <!-- Contact info -->
+        <aside class="flex flex-col gap-8">
+          <div class="flex flex-col gap-4">
+            <h2
+              class="text-[#2f2019] text-[26px] font-medium leading-tight tracking-[-0.6px] md:text-[32px] md:tracking-[-0.9px]"
+            >
+              Fale diretamente com a equipe
+            </h2>
+            <p class="text-[15px] font-normal leading-[1.6] text-[#33261d] md:text-[16px]">
+              Atendemos com hora marcada para garantir tempo dedicado a cada
+              caso. Você pode preencher o formulário ao lado ou entrar em
+              contato pelos canais abaixo.
+            </p>
+          </div>
+
+          <ul class="flex flex-col gap-5">
+            <li class="flex items-start gap-4">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-10 text-gold">
+                <Icon name="map-pin" size={20} />
+              </span>
+              <div class="flex flex-col gap-1">
+                <span class="text-[12px] font-bold uppercase tracking-[0.5px] text-gold">
+                  Endereço
+                </span>
+                <p class="text-[15px] font-medium leading-tight text-[#2f2019] md:text-[16px]">
+                  {contact.address}
+                </p>
+              </div>
+            </li>
+
+            <li class="flex items-start gap-4">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-10 text-gold">
+                <Icon name="phone" size={20} />
+              </span>
+              <div class="flex flex-col gap-1">
+                <span class="text-[12px] font-bold uppercase tracking-[0.5px] text-gold">
+                  Telefone / WhatsApp
+                </span>
+                <a
+                  href={`https://wa.me/55${phoneDigits}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-[15px] font-medium leading-tight text-[#2f2019] underline-offset-4 hover:underline md:text-[16px]"
+                >
+                  {contact.phone}
+                </a>
+              </div>
+            </li>
+
+            <li class="flex items-start gap-4">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-10 text-gold">
+                <Icon name="mail" size={20} />
+              </span>
+              <div class="flex flex-col gap-1">
+                <span class="text-[12px] font-bold uppercase tracking-[0.5px] text-gold">
+                  E-mail
+                </span>
+                <a
+                  href={`mailto:${contact.email}`}
+                  class="break-all text-[15px] font-medium leading-tight text-[#2f2019] underline-offset-4 hover:underline md:text-[16px]"
+                >
+                  {contact.email}
+                </a>
+              </div>
+            </li>
+
+            <li class="flex items-start gap-4">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-10 text-gold">
+                <Icon name="calendar" size={20} />
+              </span>
+              <div class="flex flex-col gap-1">
+                <span class="text-[12px] font-bold uppercase tracking-[0.5px] text-gold">
+                  Horário de atendimento
+                </span>
+                <p class="text-[15px] font-medium leading-tight text-[#2f2019] md:text-[16px]">
+                  {contact.hours}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- Form -->
+        <div class="rounded-3xl border border-gold-10 bg-[#f9fafb] p-6 md:p-10">
+          <form
+            id="contact-form"
+            class="flex flex-col gap-6"
+            novalidate
+          >
+            <h2
+              class="text-[#2f2019] text-[22px] font-semibold leading-tight tracking-[-0.5px] md:text-[24px]"
+            >
+              Envie sua mensagem
+            </h2>
+
+            <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+              <div class="flex flex-col gap-2">
+                <label
+                  for="contact-name"
+                  class="flex gap-1 text-[14px] font-medium text-[#2f2019] md:text-[15px]"
+                >
+                  <span>Nome</span>
+                  <span class="text-[#b3261e]" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="contact-name"
+                  name="name"
+                  required
+                  autocomplete="name"
+                  placeholder="Seu nome completo"
+                  class="rounded-full border border-[#d1d5db] bg-white px-5 py-3.5 text-[15px] text-[#2f2019] placeholder:text-black/25 focus:border-gold focus:outline-none"
+                />
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <label
+                  for="contact-phone"
+                  class="flex gap-1 text-[14px] font-medium text-[#2f2019] md:text-[15px]"
+                >
+                  <span>Telefone / WhatsApp</span>
+                  <span class="text-[#b3261e]" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="contact-phone"
+                  name="phone"
+                  required
+                  autocomplete="tel"
+                  placeholder="(00) 00000-0000"
+                  class="rounded-full border border-[#d1d5db] bg-white px-5 py-3.5 text-[15px] text-[#2f2019] placeholder:text-black/25 focus:border-gold focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label
+                for="contact-email"
+                class="flex gap-1 text-[14px] font-medium text-[#2f2019] md:text-[15px]"
+              >
+                <span>E-mail</span>
+                <span class="text-[#b3261e]" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                required
+                autocomplete="email"
+                placeholder="Seu melhor e-mail"
+                class="rounded-full border border-[#d1d5db] bg-white px-5 py-3.5 text-[15px] text-[#2f2019] placeholder:text-black/25 focus:border-gold focus:outline-none"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label
+                for="contact-area"
+                class="flex gap-1 text-[14px] font-medium text-[#2f2019] md:text-[15px]"
+              >
+                <span>Área de interesse</span>
+                <span class="text-[#b3261e]" aria-hidden="true">*</span>
+              </label>
+              <select
+                id="contact-area"
+                name="area"
+                required
+                class="appearance-none rounded-full border border-[#d1d5db] bg-white bg-[url('/icons/chevron-down.svg')] bg-[right_1.25rem_center] bg-no-repeat px-5 py-3.5 pr-12 text-[15px] text-[#2f2019] focus:border-gold focus:outline-none"
+              >
+                <option value="" disabled selected>Selecione</option>
+                <option value="imobiliario">Direito Imobiliário</option>
+                <option value="familia">Direito de Família</option>
+                <option value="sucessoes">Sucessões</option>
+                <option value="patrimonial">Planejamento Patrimonial</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label
+                for="contact-message"
+                class="flex gap-1 text-[14px] font-medium text-[#2f2019] md:text-[15px]"
+              >
+                <span>Mensagem</span>
+                <span class="text-[#b3261e]" aria-hidden="true">*</span>
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                required
+                rows="5"
+                placeholder="Conte um pouco sobre o seu caso"
+                class="rounded-2xl border border-[#d1d5db] bg-white px-5 py-3.5 text-[15px] text-[#2f2019] placeholder:text-black/25 focus:border-gold focus:outline-none"
+              ></textarea>
+            </div>
+
+            <label class="flex cursor-pointer items-start gap-3 text-[14px] font-normal leading-[1.4] text-[#2f2019] md:text-[15px]">
+              <input
+                type="checkbox"
+                name="privacy"
+                required
+                class="peer sr-only"
+              />
+              <span
+                aria-hidden="true"
+                class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded bg-mute text-white peer-checked:bg-gold peer-focus-visible:ring-2 peer-focus-visible:ring-gold/40"
+              >
+                <Icon name="check" size={14} class="hidden peer-checked:block" />
+              </span>
+              <span>
+                Li e concordo com a
+                <a href="#privacidade" class="underline">Política de Privacidade</a>.
+              </span>
+            </label>
+
+            <button type="submit" class="btn btn-primary btn-md">
+              <span>Enviar mensagem</span>
+              <Icon name="arrow-right" size={20} />
+            </button>
+          </form>
+
+          <div
+            id="contact-success"
+            hidden
+            class="flex flex-col items-center gap-3 py-6 text-center"
+          >
+            <span class="flex size-14 items-center justify-center rounded-full bg-gold-10 text-gold">
+              <Icon name="check-circle" size={28} />
+            </span>
+            <p class="text-[18px] font-semibold text-[#2f2019]">
+              Mensagem enviada com sucesso!
+            </p>
+            <p class="text-[14px] font-normal text-[#33261d]">
+              Entraremos em contato em breve.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const success = document.getElementById('contact-success') as HTMLElement | null;
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // TODO: post form data to backend / lead capture endpoint.
+
+    form.style.display = 'none';
+    success?.removeAttribute('hidden');
+    success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+</script>

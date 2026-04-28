@@ -1,0 +1,126 @@
+---
+import Icon from '../Icon.astro';
+
+const benefits = [
+  {
+    title: 'Estratégia antes do risco',
+    description:
+      'Antecipamos cenários jurídicos para evitar perdas patrimoniais e decisões mal estruturadas.',
+  },
+  {
+    title: 'Atuação consultiva',
+    description:
+      'Condução estratégica em cada decisão relevante, com análise técnica e visão de impacto patrimonial.',
+  },
+  {
+    title: 'Experiência em decisões de alto impacto',
+    description:
+      'Atuação em casos que envolvem patrimônio, investimento e estruturas familiares complexas.',
+  },
+];
+---
+
+<section
+  id="por-que-confiar"
+  class="w-full border-b border-gold-5 bg-white"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-12 px-6 pt-12 pb-12 md:flex-row md:items-center md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+  >
+    <!-- Left: heading + benefits -->
+    <div class="flex flex-1 flex-col gap-8 md:max-w-[568px] md:gap-10">
+      <h2
+        class="font-medium text-[#2f2019] text-[28px] leading-[36px] tracking-[-0.6px] md:text-[36px] md:leading-[45px] md:tracking-[-0.9px]"
+      >
+        Por que clientes confiam na Câmara & Nagib?
+      </h2>
+
+      <ul class="flex flex-col gap-8">
+        {
+          benefits.map((b) => (
+            <li class="flex items-start gap-4 md:gap-6">
+              <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-gold-10 text-gold">
+                <Icon name="check-circle" size={24} />
+              </span>
+              <div class="flex flex-col gap-2">
+                <h3 class="text-[18px] font-semibold leading-7 tracking-[-0.5px] text-[#2f2019] md:text-[20px]">
+                  {b.title}
+                </h3>
+                <p class="text-[15px] font-normal leading-[26px] text-[#2f2019] md:text-[16px]">
+                  {b.description}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Right: bento grid -->
+    <div class="grid w-full grid-cols-2 gap-4 md:max-w-[568px]">
+      <!-- Column 1 -->
+      <div class="flex flex-col gap-4 md:pt-12">
+        <div
+          class="relative aspect-[276/414] w-full overflow-hidden rounded-[24px] bg-[#f3f4f6] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]"
+        >
+          <img
+            src="/images/por-que-confiar/rafaela.webp"
+            alt="Rafaela Câmara"
+            class="absolute inset-0 h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+        <div
+          class="relative overflow-hidden rounded-[24px] bg-gold p-6 md:p-8"
+        >
+          <span
+            class="pointer-events-none absolute right-0 top-0 h-full w-1/2 select-none text-[180px] font-bold leading-none text-white/15"
+            aria-hidden="true"
+          >
+            C
+          </span>
+          <p class="relative text-[28px] font-bold leading-9 text-white md:text-[36px] md:leading-10">
+            20+
+          </p>
+          <p
+            class="relative mt-2 text-[12px] font-medium uppercase leading-5 tracking-[1.4px] text-white/80 md:text-[14px]"
+          >
+            Anos de Experiência<br class="hidden md:inline" /> Somados
+          </p>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="flex flex-col gap-4">
+        <div
+          class="relative overflow-hidden rounded-[24px] bg-navy p-6 md:p-8"
+        >
+          <span
+            class="pointer-events-none absolute right-0 top-0 h-full w-1/2 select-none text-[180px] font-bold leading-none text-white/15"
+            aria-hidden="true"
+          >
+            N
+          </span>
+          <p class="relative text-[28px] font-bold leading-9 text-white md:text-[36px] md:leading-10">
+            500+
+          </p>
+          <p
+            class="relative mt-2 text-[12px] font-medium uppercase leading-5 tracking-[1.4px] text-white/80 md:text-[14px]"
+          >
+            Clientes Atendidos
+          </p>
+        </div>
+        <div
+          class="relative aspect-[276/414] w-full overflow-hidden rounded-[24px] bg-[#f3f4f6] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]"
+        >
+          <img
+            src="/images/por-que-confiar/ana-carolina.webp"
+            alt="Ana Carolina Nagib"
+            class="absolute inset-0 h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
