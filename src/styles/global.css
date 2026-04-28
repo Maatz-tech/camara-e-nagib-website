@@ -70,10 +70,12 @@ html {
   border-radius: 4px;
 }
 
-/* Responsive image default — :where() keeps specificity at 0 so any utility class wins */
-:where(img) {
-  max-width: 100%;
-  height: auto;
+/* Responsive image default — placed in @layer base so utility classes (in @layer utilities) win */
+@layer base {
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 body {

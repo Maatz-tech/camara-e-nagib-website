@@ -5,8 +5,11 @@ interface Props {
   titleStart: string;
   titleEmphasis: string;
   description: string[];
-  image1: string;
-  image2: string;
+  /** Single composite image (already includes layout/logo). When provided, replaces the collage. */
+  composite?: string;
+  /** Used when `composite` is not provided. Builds a 2-photo collage with optional logo overlay. */
+  image1?: string;
+  image2?: string;
   logo?: string;
 }
 
@@ -14,14 +17,16 @@ const {
   titleStart,
   titleEmphasis,
   description,
+  composite,
   image1,
   image2,
   logo,
 } = Astro.props;
 
 const resolve = (p: string) => (p.startsWith('http') ? p : url(p));
-const image1Src = resolve(image1);
-const image2Src = resolve(image2);
+const compositeSrc = composite ? resolve(composite) : undefined;
+const image1Src = image1 ? resolve(image1) : undefined;
+const image2Src = image2 ? resolve(image2) : undefined;
 const logoSrc = logo ? resolve(logo) : undefined;
 ---
 
@@ -29,61 +34,70 @@ const logoSrc = logo ? resolve(logo) : undefined;
   <div
     class="mx-auto flex w-full max-w-[1440px] flex-col gap-8 px-6 pt-12 pb-12 md:flex-row md:items-start md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
   >
-    <!-- Mobile: single wide photo. Desktop: collage with 2 photos + logo overlay. -->
-    <div
-      class="relative aspect-[327/228] w-full overflow-hidden rounded-2xl md:hidden"
-    >
-      <img
-        src={image1Src}
-        alt=""
-        aria-hidden="true"
-        class="absolute inset-0 h-full w-full object-cover object-center"
-        loading="lazy"
-      />
-    </div>
-
-    <!-- Desktop image collage -->
-    <div class="relative hidden shrink-0 md:block md:self-start">
-      <div class="relative h-[352px] w-[504px]">
-        <!-- Photo 1 (top-left) -->
-        <div
-          class="absolute left-0 top-0 h-[300px] w-[240px] overflow-hidden rounded-2xl"
-        >
+    {
+      compositeSrc ? (
+        <div class="relative w-full md:max-w-[504px] md:shrink-0 md:self-start">
           <img
-            src={image1Src}
+            src={compositeSrc}
             alt=""
             aria-hidden="true"
-            class="h-full w-full object-cover object-bottom"
+            class="block h-auto w-full"
             loading="lazy"
           />
         </div>
-        <!-- Photo 2 (bottom-right, offset) -->
-        <div
-          class="absolute right-0 top-[32px] h-[300px] w-[240px] overflow-hidden rounded-2xl"
-        >
-          <img
-            src={image2Src}
-            alt=""
-            aria-hidden="true"
-            class="h-full w-full object-cover object-center"
-            loading="lazy"
-          />
-        </div>
-        <!-- Logo overlay -->
-        {
-          logoSrc && (
-            <div class="absolute left-[212px] top-[272px] flex size-20 items-center justify-center">
+      ) : (
+        <>
+          <div class="relative aspect-[327/228] w-full overflow-hidden rounded-2xl md:hidden">
+            {image1Src && (
               <img
-                src={logoSrc}
-                alt="Câmara & Nagib"
-                class="h-full w-full"
+                src={image1Src}
+                alt=""
+                aria-hidden="true"
+                class="absolute inset-0 h-full w-full object-cover object-center"
                 loading="lazy"
               />
+            )}
+          </div>
+
+          <div class="relative hidden shrink-0 md:block md:self-start">
+            <div class="relative h-[352px] w-[504px]">
+              {image1Src && (
+                <div class="absolute left-0 top-0 h-[300px] w-[240px] overflow-hidden rounded-2xl">
+                  <img
+                    src={image1Src}
+                    alt=""
+                    aria-hidden="true"
+                    class="h-full w-full object-cover object-bottom"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              {image2Src && (
+                <div class="absolute right-0 top-[32px] h-[300px] w-[240px] overflow-hidden rounded-2xl">
+                  <img
+                    src={image2Src}
+                    alt=""
+                    aria-hidden="true"
+                    class="h-full w-full object-cover object-center"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+              {logoSrc && (
+                <div class="absolute left-[212px] top-[272px] flex size-20 items-center justify-center">
+                  <img
+                    src={logoSrc}
+                    alt="Câmara & Nagib"
+                    class="h-full w-full"
+                    loading="lazy"
+                  />
+                </div>
+              )}
             </div>
-          )
-        }
-      </div>
-    </div>
+          </div>
+        </>
+      )
+    }
 
     <!-- Copy -->
     <div class="flex flex-1 flex-col gap-6">
