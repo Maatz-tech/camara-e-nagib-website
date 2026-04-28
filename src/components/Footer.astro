@@ -1,21 +1,25 @@
 ---
 import Icon from './Icon.astro';
+import { url } from '../lib/url';
 
 const navigation = [
-  { href: '/', label: 'Início' },
-  { href: '/sobre', label: 'Sobre o Escritório' },
-  { href: '/#atuacoes', label: 'Áreas de Atuação' },
-  { href: '/blog', label: 'Blog Jurídico' },
-  { href: '/materiais', label: 'Materiais Gratuitos' },
+  { href: url('/'), label: 'Início' },
+  { href: url('/sobre'), label: 'Sobre o Escritório' },
+  { href: url('/#atuacoes'), label: 'Áreas de Atuação' },
+  { href: url('/blog'), label: 'Blog Jurídico' },
+  { href: url('/materiais'), label: 'Materiais Gratuitos' },
 ];
 
 const services = [
-  { href: '/atuacoes/direito-imobiliario', label: 'Direito Imobiliário' },
-  { href: '/atuacoes/direito-das-familias', label: 'Direito das Famílias' },
+  { href: url('/atuacoes/direito-imobiliario'), label: 'Direito Imobiliário' },
+  { href: url('/atuacoes/direito-das-familias'), label: 'Direito das Famílias' },
   { href: '#sucessoes', label: 'Direito das Sucessões' },
   { href: '#patrimonial', label: 'Planejamento Patrimonial' },
   { href: '#regularizacao', label: 'Regularização de Imóveis' },
 ];
+
+const homeHref = url('/');
+const logoSrc = url('/images/logo-light.webp');
 
 const contact = {
   address: 'Natal, RN - Brasil',
@@ -33,9 +37,9 @@ const currentYear = new Date().getFullYear();
     >
       <!-- Brand column -->
       <div class="flex flex-col gap-6">
-        <a href="/" class="inline-flex" aria-label="Câmara & Nagib — Início">
+        <a href={homeHref} class="inline-flex" aria-label="Câmara & Nagib — Início">
           <img
-            src="/images/logo-light.webp"
+            src={logoSrc}
             alt="Câmara & Nagib Advocacia Especializada"
             width="192"
             height="62"

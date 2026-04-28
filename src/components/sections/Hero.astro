@@ -1,8 +1,10 @@
 ---
 import Icon from '../Icon.astro';
+import { url } from '../../lib/url';
 
-const ctaPrimaryHref = '/contato';
-const ctaSecondaryHref = '/#atuacoes';
+const ctaPrimaryHref = url('/contato');
+const ctaSecondaryHref = url('/#atuacoes');
+const heroImage = url('/images/hero/hero-image.webp');
 ---
 
 <section
@@ -38,7 +40,7 @@ const ctaSecondaryHref = '/#atuacoes';
 
       <!-- Mobile-only image, between paragraph and buttons -->
       <img
-        src="/images/hero/hero-image.webp"
+        src={heroImage}
         alt="Sócias Ana Carolina Nagib e Rafaela Câmara"
         class="mt-8 h-auto w-full md:hidden"
         width="1164"
@@ -64,7 +66,7 @@ const ctaSecondaryHref = '/#atuacoes';
     <!-- Desktop-only image (right column) -->
     <div class="hidden md:flex md:flex-1 md:justify-end">
       <img
-        src="/images/hero/hero-image.webp"
+        src={heroImage}
         alt="Sócias Ana Carolina Nagib e Rafaela Câmara"
         class="h-auto w-full max-w-[582px]"
         width="1164"

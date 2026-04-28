@@ -1,4 +1,6 @@
 ---
+import { url } from '../../lib/url';
+
 interface Item {
   icon: string;
   title: string;
@@ -11,6 +13,10 @@ interface Props {
 }
 
 const { title = 'Onde atuamos', items } = Astro.props;
+const resolvedItems = items.map((it) => ({
+  ...it,
+  icon: it.icon.startsWith('http') ? it.icon : url(it.icon),
+}));
 ---
 
 <section class="w-full border-b border-gold-5 bg-white">
@@ -28,7 +34,7 @@ const { title = 'Onde atuamos', items } = Astro.props;
         class="onde-atuamos-scroller flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-2 scroll-px-6 md:px-[120px] md:scroll-px-[120px]"
       >
         {
-          items.map((item) => (
+          resolvedItems.map((item) => (
             <article class="flex w-[300px] shrink-0 snap-start flex-col gap-6 rounded-2xl border border-mute p-6 sm:w-[420px] md:w-[588px]">
               <div class="flex size-12 items-center justify-center rounded-full bg-navy/10">
                 <img

@@ -6,6 +6,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import BlogCard from '../../components/BlogCard.astro';
+import { url } from '../../lib/url';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -41,7 +42,11 @@ const formatDate = (dateStr: string) =>
     year: 'numeric',
   });
 
-const postUrl = new URL(`/blog/${post.id}`, Astro.site).href;
+const postUrl = new URL(url(`/blog/${post.id}`), Astro.site).href;
+const heroImage = url(post.data.image);
+const authorImage = url(post.data.authorImage);
+const blogHref = url('/blog');
+const ogImage = url(post.data.image);
 const shareUrls = {
   facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`,
   linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`,
@@ -82,7 +87,7 @@ const jsonLd = [
 <Base
   title={`${post.data.title} | Câmara & Nagib`}
   description={post.data.summary}
-  image={post.data.image}
+  image={ogImage}
   type="article"
   jsonLd={jsonLd}
 >
@@ -98,7 +103,7 @@ const jsonLd = [
       >
         <div class="flex flex-1 flex-col gap-5 md:gap-6">
           <a
-            href="/blog"
+            href={blogHref}
             class="inline-flex items-center gap-2 text-[14px] font-semibold text-[#2f2019] transition-opacity hover:opacity-70"
           >
             <Icon name="chevron-left" size={14} />
@@ -137,7 +142,7 @@ const jsonLd = [
 
         <div class="md:w-[480px] md:shrink-0">
           <img
-            src={post.data.image}
+            src={heroImage}
             alt={post.data.title}
             class="h-auto w-full rounded-2xl object-cover md:h-[280px]"
             width="960"
@@ -166,7 +171,7 @@ const jsonLd = [
         >
           <div class="flex items-center gap-3">
             <img
-              src={post.data.authorImage}
+              src={authorImage}
               alt={post.data.author}
               class="size-10 rounded-full object-cover md:size-11"
               loading="lazy"
@@ -230,7 +235,7 @@ const jsonLd = [
           {
             prevPost ? (
               <a
-                href={`/blog/${prevPost.id}`}
+                href={url(`/blog/${prevPost.id}`)}
                 class="inline-flex items-center gap-2 text-[15px] font-semibold text-[#2f2019] transition-opacity hover:opacity-70 md:text-[17px]"
               >
                 <Icon name="chevron-left" size={14} />
@@ -243,7 +248,7 @@ const jsonLd = [
           {
             nextPost ? (
               <a
-                href={`/blog/${nextPost.id}`}
+                href={url(`/blog/${nextPost.id}`)}
                 class="inline-flex items-center gap-2 text-[15px] font-semibold text-[#2f2019] transition-opacity hover:opacity-70 md:text-[17px]"
               >
                 <span>Próximo</span>
@@ -267,7 +272,7 @@ const jsonLd = [
                 Leia mais artigos
               </h2>
               <a
-                href="/blog"
+                href={blogHref}
                 class="inline-flex items-center gap-2 rounded-full border border-gold px-6 py-2.5 text-[14px] font-semibold text-gold transition-colors hover:bg-gold hover:text-white md:text-[16px]"
               >
                 <span>Ver todos</span>

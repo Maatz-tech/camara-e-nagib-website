@@ -1,19 +1,20 @@
 ---
 import Icon from '../Icon.astro';
+import { url } from '../../lib/url';
 
-const ctaHref = '/contato';
+const ctaHref = url('/contato');
 
 const leaders = [
   {
     name: 'Rafaela Câmara',
     role: 'Advogada — OAB/RN 13.380',
-    image: '/images/leaders/rafaela.webp',
+    image: url('/images/leaders/rafaela.webp'),
     linkedin: '#',
   },
   {
     name: 'Ana Carolina Nagib',
     role: 'Advogada — OAB/RN 5.438',
-    image: '/images/leaders/ana-carolina.webp',
+    image: url('/images/leaders/ana-carolina.webp'),
     linkedin: '#',
   },
 ];

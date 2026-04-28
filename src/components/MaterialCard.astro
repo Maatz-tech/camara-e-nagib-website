@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { url } from '../lib/url';
 
 interface Props {
   category: string;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 const { category, title, image, fileUrl, fileName } = Astro.props;
+const imageHref = image.startsWith('http') ? image : url(image);
+const fileHref = fileUrl.startsWith('http') ? fileUrl : url(fileUrl);
 ---
 
 <article class="flex w-full flex-col gap-6">
@@ -17,7 +20,7 @@ const { category, title, image, fileUrl, fileName } = Astro.props;
     class="relative h-[200px] w-full overflow-hidden rounded-2xl bg-gold-10 shadow-sm md:h-[220px]"
   >
     <img
-      src={image}
+      src={imageHref}
       alt={title}
       class="absolute inset-0 h-full w-full object-cover"
       loading="lazy"
@@ -36,7 +39,7 @@ const { category, title, image, fileUrl, fileName } = Astro.props;
   <button
     type="button"
     class="material-download-trigger inline-flex items-center justify-center gap-3 self-start rounded-full border border-gold bg-white px-10 py-2.5 text-[16px] font-semibold leading-7 text-gold transition-colors hover:bg-gold hover:text-white md:text-[18px]"
-    data-file-url={fileUrl}
+    data-file-url={fileHref}
     data-file-name={fileName ?? ''}
     data-material-title={title}
   >

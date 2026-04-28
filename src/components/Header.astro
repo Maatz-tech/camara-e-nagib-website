@@ -1,20 +1,26 @@
 ---
 import Icon from './Icon.astro';
+import { url } from '../lib/url';
 
 const navLinks = [
-  { href: '/', label: 'Início' },
-  { href: '/sobre', label: 'Sobre' },
-  { href: '/#atuacoes', label: 'Atuações' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/materiais', label: 'Ebook' },
+  { href: url('/'), label: 'Início' },
+  { href: url('/sobre'), label: 'Sobre' },
+  { href: url('/#atuacoes'), label: 'Atuações' },
+  { href: url('/blog'), label: 'Blog' },
+  { href: url('/materiais'), label: 'Ebook' },
 ];
 
-const ctaHref = '/contato';
+const ctaHref = url('/contato');
+const homeHref = url('/');
+const logoSrc = url('/images/logo-dark.webp');
 
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const baseLen = import.meta.env.BASE_URL.replace(/\/$/, '').length;
+const currentPath =
+  (Astro.url.pathname.slice(baseLen) || '/').replace(/\/$/, '') || '/';
 const isActive = (href: string) => {
   if (href.includes('#')) return false;
-  const path = href.replace(/\/$/, '') || '/';
+  const stripped = href.slice(baseLen) || '/';
+  const path = stripped.replace(/\/$/, '') || '/';
   if (path === '/') return currentPath === '/';
   return currentPath === path || currentPath.startsWith(path + '/');
 };
@@ -28,9 +34,9 @@ const isActive = (href: string) => {
     aria-label="Navegação principal"
   >
     <!-- Logo -->
-    <a href="/" class="flex items-center" aria-label="Câmara & Nagib — Início">
+    <a href={homeHref} class="flex items-center" aria-label="Câmara & Nagib — Início">
       <img
-        src="/images/logo-dark.webp"
+        src={logoSrc}
         alt="Câmara & Nagib Advocacia Especializada"
         width="125"
         height="40"

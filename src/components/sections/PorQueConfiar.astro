@@ -1,5 +1,9 @@
 ---
 import Icon from '../Icon.astro';
+import { url } from '../../lib/url';
+
+const rafaelaImage = url('/images/por-que-confiar/rafaela.webp');
+const anaImage = url('/images/por-que-confiar/ana-carolina.webp');
 
 const benefits = [
   {
@@ -64,7 +68,7 @@ const benefits = [
           class="relative aspect-[276/414] w-full overflow-hidden rounded-[24px] bg-[#f3f4f6] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]"
         >
           <img
-            src="/images/por-que-confiar/rafaela.webp"
+            src={rafaelaImage}
             alt="Rafaela Câmara"
             class="absolute inset-0 h-full w-full object-cover object-center"
             loading="lazy"
@@ -114,7 +118,7 @@ const benefits = [
           class="relative aspect-[276/414] w-full overflow-hidden rounded-[24px] bg-[#f3f4f6] shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]"
         >
           <img
-            src="/images/por-que-confiar/ana-carolina.webp"
+            src={anaImage}
             alt="Ana Carolina Nagib"
             class="absolute inset-0 h-full w-full object-cover object-center"
             loading="lazy"

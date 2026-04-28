@@ -1,4 +1,6 @@
 ---
+import { url } from '../../lib/url';
+
 interface Props {
   titleStart: string;
   titleEmphasis: string;
@@ -16,6 +18,11 @@ const {
   image2,
   logo,
 } = Astro.props;
+
+const resolve = (p: string) => (p.startsWith('http') ? p : url(p));
+const image1Src = resolve(image1);
+const image2Src = resolve(image2);
+const logoSrc = logo ? resolve(logo) : undefined;
 ---
 
 <section class="w-full border-b border-gold-5 bg-white">
@@ -30,7 +37,7 @@ const {
           class="absolute left-0 top-0 h-[200px] w-[160px] overflow-hidden rounded-2xl md:h-[300px] md:w-[240px]"
         >
           <img
-            src={image1}
+            src={image1Src}
             alt=""
             aria-hidden="true"
             class="h-full w-full object-cover object-bottom"
@@ -42,7 +49,7 @@ const {
           class="absolute right-0 top-[80px] h-[200px] w-[160px] overflow-hidden rounded-2xl md:right-0 md:top-[32px] md:h-[300px] md:w-[240px]"
         >
           <img
-            src={image2}
+            src={image2Src}
             alt=""
             aria-hidden="true"
             class="h-full w-full object-cover object-center"
@@ -51,10 +58,10 @@ const {
         </div>
         <!-- Logo overlay -->
         {
-          logo && (
+          logoSrc && (
             <div class="absolute left-[140px] top-[230px] flex size-14 items-center justify-center md:left-[212px] md:top-[272px] md:size-20">
               <img
-                src={logo}
+                src={logoSrc}
                 alt="Câmara & Nagib"
                 class="h-full w-full"
                 loading="lazy"

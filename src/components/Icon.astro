@@ -1,4 +1,6 @@
 ---
+import { url } from '../lib/url';
+
 interface Props {
   name: string;
   size?: number | string;
@@ -7,10 +9,11 @@ interface Props {
 
 const { name, size = 20, class: className = '' } = Astro.props;
 const sizeValue = typeof size === 'number' ? `${size}px` : size;
+const iconUrl = url(`/icons/${name}.svg`);
 ---
 
 <span
   class:list={['icon', className]}
-  style={`--icon-url: url(/icons/${name}.svg); --icon-size: ${sizeValue};`}
+  style={`--icon-url: url(${iconUrl}); --icon-size: ${sizeValue};`}
   aria-hidden="true"
 ></span>

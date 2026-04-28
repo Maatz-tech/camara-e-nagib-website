@@ -5,7 +5,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://camaraenagib.adv.br',
+  site: 'https://maatz-tech.github.io',
+  base: '/camara-e-nagib-website',
   integrations: [
     sitemap({
       changefreq: 'weekly',

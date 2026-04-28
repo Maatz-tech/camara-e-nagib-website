@@ -1,4 +1,6 @@
 ---
+import { url } from '../lib/url';
+
 interface Props {
   slug: string;
   title: string;
@@ -20,10 +22,12 @@ const {
 } = Astro.props;
 
 const isFeatured = variant === 'featured';
+const postHref = url(`/blog/${slug}`);
+const imageSrc = image.startsWith('http') ? image : url(image);
 ---
 
 <a
-  href={`/blog/${slug}`}
+  href={postHref}
   class:list={[
     'group flex flex-col overflow-hidden rounded-2xl border border-gold-10 bg-white transition-shadow hover:shadow-[0_4px_24px_rgba(0,0,0,0.06)]',
     isFeatured ? 'md:flex-row md:gap-0' : 'gap-4',
@@ -36,7 +40,7 @@ const isFeatured = variant === 'featured';
     ]}
   >
     <img
-      src={image}
+      src={imageSrc}
       alt={title}
       class:list={[
         'h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]',

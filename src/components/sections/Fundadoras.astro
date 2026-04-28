@@ -1,5 +1,6 @@
 ---
 import Icon from '../Icon.astro';
+import { url } from '../../lib/url';
 
 interface Founder {
   name: string;
@@ -20,7 +21,7 @@ const founders: Founder[] = [
       'Advogada com atuação estratégica em Direito de Família e Sucessões, com foco na proteção patrimonial e organização jurídica de estruturas familiares.',
       'Sua atuação é direcionada ao planejamento familiar, sucessório e matrimonial, com ênfase na antecipação de riscos e na preservação do patrimônio em cenários de transição.',
     ],
-    image: '/images/sobre/rafaela.webp',
+    image: url('/images/sobre/rafaela.webp'),
     instagram: '#',
     linkedin: '#',
   },
@@ -32,7 +33,7 @@ const founders: Founder[] = [
       'Advogada com atuação estratégica em Direito Imobiliário, com foco em decisões que envolvem alto impacto patrimonial e financeiro.',
       'Atua na estruturação e análise jurídica de operações imobiliárias, antecipando riscos e garantindo segurança na alocação de capital.',
     ],
-    image: '/images/sobre/ana-carolina.webp',
+    image: url('/images/sobre/ana-carolina.webp'),
     instagram: '#',
     linkedin: '#',
   },

@@ -1,5 +1,8 @@
 ---
 import Icon from './Icon.astro';
+import { url } from '../lib/url';
+
+const privacyHref = url('/privacidade');
 ---
 
 <dialog
@@ -87,7 +90,7 @@ import Icon from './Icon.astro';
         <Icon name="check" size={14} class="hidden peer-checked:block" />
       </span>
       <span>
-        Li e concordo com a <a href="/privacidade" class="underline">Política de Privacidade</a>.
+        Li e concordo com a <a href={privacyHref} class="underline">Política de Privacidade</a>.
       </span>
     </label>
 

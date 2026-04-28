@@ -1,4 +1,6 @@
 ---
+import { url } from '../../lib/url';
+
 interface Props {
   eyebrow?: string;
   title?: string;
@@ -17,6 +19,12 @@ const {
   watermarkPosition = 'right',
 } = Astro.props;
 
+const watermarkSrc = watermark
+  ? watermark.startsWith('http')
+    ? watermark
+    : url(watermark)
+  : undefined;
+
 const watermarkClasses =
   watermarkPosition === 'center'
     ? 'pointer-events-none absolute left-1/2 top-1/2 hidden h-[180%] w-auto -translate-x-1/2 -translate-y-1/2 select-none md:block'
@@ -28,9 +36,9 @@ const hasTitleSlot = Astro.slots.has('title');
 
 <section class="relative w-full overflow-hidden bg-[#f9f7f2]">
   {
-    watermark && (
+    watermarkSrc && (
       <img
-        src={watermark}
+        src={watermarkSrc}
         alt=""
         aria-hidden="true"
         class={watermarkClasses}
