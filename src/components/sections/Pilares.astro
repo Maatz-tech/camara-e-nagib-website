@@ -29,18 +29,21 @@ const pillars: Pillar[] = [
 
 <section class="w-full border-b border-gold-5 bg-[#f9fafb]">
   <div
-    class="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 pt-12 pb-12 md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-10 pt-12 pb-12 md:gap-16 md:pt-20 md:pb-20"
   >
     <h2
-      class="text-center text-[32px] font-normal leading-tight text-[#2f2019] md:text-[48px] md:leading-[48px]"
+      class="px-6 text-center text-[32px] font-normal leading-tight text-[#2f2019] md:px-[120px] md:text-[48px] md:leading-[48px]"
     >
       Nossos pilares
     </h2>
 
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    <!-- Mobile: horizontal carousel. Desktop: 3-col grid. -->
+    <div
+      class="pilares-cards flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-6 scroll-px-6 pb-2 md:grid md:grid-cols-3 md:overflow-visible md:px-[120px] md:pb-0"
+    >
       {
         pillars.map((p) => (
-          <article class="flex flex-col gap-6 rounded-2xl border border-mute bg-white p-7 md:p-8">
+          <article class="flex w-[300px] shrink-0 snap-start flex-col gap-6 rounded-2xl border border-mute bg-white p-7 md:w-auto md:p-8">
             <h3
               class="italic text-[28px] font-semibold text-navy md:text-[36px]"
               style="font-family: var(--font-serif);"
@@ -63,3 +66,12 @@ const pillars: Pillar[] = [
     </div>
   </div>
 </section>
+
+<style>
+  .pilares-cards {
+    scrollbar-width: none;
+  }
+  .pilares-cards::-webkit-scrollbar {
+    display: none;
+  }
+</style>
