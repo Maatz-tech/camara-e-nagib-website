@@ -33,23 +33,25 @@ const initial = (name: string) => name.trim().charAt(0).toUpperCase();
   class="w-full border-b border-gold-5 bg-[#f9f7f2]"
 >
   <div
-    class="mx-auto flex w-full max-w-[1280px] flex-col gap-10 px-6 pt-12 pb-12 md:gap-14 md:px-[120px] md:pt-20 md:pb-20"
+    class="mx-auto flex w-full max-w-[1280px] flex-col gap-10 pt-12 pb-12 md:gap-14 md:pt-20 md:pb-20"
   >
-    <!-- Header -->
-    <div class="flex flex-col items-center gap-4">
+    <!-- Header: left on mobile, centered on desktop -->
+    <div class="flex flex-col items-start gap-4 px-6 md:items-center md:px-[120px]">
       <span class="eyebrow eyebrow-pill">Depoimentos</span>
       <h2
-        class="text-center font-medium text-[#2f2019] text-[28px] leading-9 tracking-[-0.6px] md:text-[36px] md:leading-10 md:tracking-[-0.9px]"
+        class="font-medium text-[#2f2019] text-[28px] leading-9 tracking-[-0.6px] md:text-center md:text-[36px] md:leading-10 md:tracking-[-0.9px]"
       >
         O que dizem nossos clientes
       </h2>
     </div>
 
-    <!-- Cards -->
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    <!-- Cards: horizontal carousel on mobile, 3-col grid on desktop -->
+    <div
+      class="depoimentos-cards flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-6 scroll-px-6 pb-2 md:grid md:grid-cols-3 md:overflow-visible md:px-[120px] md:pb-0"
+    >
       {
         testimonials.map((t) => (
-          <article class="flex flex-col justify-between rounded-3xl border border-gold-5 bg-white p-6 md:p-[33px]">
+          <article class="flex w-[320px] shrink-0 snap-start flex-col justify-between rounded-3xl border border-gold-5 bg-white p-6 md:w-auto md:p-[33px]">
             <div class="flex flex-col gap-6 pb-6">
               <Icon name="quote" size={32} class="text-gold" />
               <p class="text-[15px] font-normal leading-[26px] text-[#2f2019] md:text-[16px]">
@@ -80,3 +82,12 @@ const initial = (name: string) => name.trim().charAt(0).toUpperCase();
     </div>
   </div>
 </section>
+
+<style>
+  .depoimentos-cards {
+    scrollbar-width: none;
+  }
+  .depoimentos-cards::-webkit-scrollbar {
+    display: none;
+  }
+</style>
