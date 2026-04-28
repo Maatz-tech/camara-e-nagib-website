@@ -33,6 +33,8 @@ const pillars: Pillar[] = [
   >
     <h2
       class="px-6 text-center text-[32px] font-normal leading-tight text-[#2f2019] md:px-[120px] md:text-[48px] md:leading-[48px]"
+      data-animate
+      data-animate-type="typing"
     >
       Nossos pilares
     </h2>
@@ -42,8 +44,12 @@ const pillars: Pillar[] = [
       class="pilares-cards flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-6 scroll-px-6 pb-2 md:grid md:grid-cols-3 md:overflow-visible md:px-[120px] md:pb-0"
     >
       {
-        pillars.map((p) => (
-          <article class="flex w-[300px] shrink-0 snap-start flex-col gap-6 rounded-2xl border border-mute bg-white p-7 md:w-auto md:p-8">
+        pillars.map((p, i) => (
+          <article
+            class="flex w-[300px] shrink-0 snap-start flex-col gap-6 rounded-2xl border border-mute bg-white p-7 md:w-auto md:p-8"
+            data-animate
+            data-animate-delay={`${(i + 1) * 100}`}
+          >
             <h3
               class="italic text-[28px] font-semibold text-navy md:text-[36px]"
               style="font-family: var(--font-serif);"

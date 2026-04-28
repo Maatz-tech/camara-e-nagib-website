@@ -103,6 +103,8 @@ const logoSrc = logo ? resolve(logo) : undefined;
     <div class="flex flex-1 flex-col gap-6">
       <h2
         class="text-[#2f2019] text-[32px] leading-[1.2] tracking-[-0.9px] md:text-[32px] md:tracking-[-1.2px]"
+        data-animate
+        data-animate-type="typing"
       >
         <span class="font-normal">{titleStart}</span>
         <span
@@ -115,6 +117,8 @@ const logoSrc = logo ? resolve(logo) : undefined;
 
       <div
         class="flex flex-col gap-4 text-[16px] font-normal leading-[1.6] text-[#2f2019] md:text-[18px]"
+        data-animate
+        data-animate-delay="100"
       >
         {description.map((paragraph) => <p>{paragraph}</p>)}
       </div>

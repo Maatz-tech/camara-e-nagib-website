@@ -114,12 +114,19 @@ const privacyHref = url('/privacidade');
     let pendingFileName = '';
 
     document
-      .querySelectorAll<HTMLButtonElement>('.material-download-trigger')
+      .querySelectorAll<HTMLElement>('.material-download-trigger')
       .forEach((trigger) => {
-        trigger.addEventListener('click', () => {
+        const open = () => {
           pendingFileUrl = trigger.dataset.fileUrl ?? '';
           pendingFileName = trigger.dataset.fileName ?? '';
           dialog.showModal();
+        };
+        trigger.addEventListener('click', open);
+        trigger.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            open();
+          }
         });
       });
 

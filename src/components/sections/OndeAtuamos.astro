@@ -25,13 +25,15 @@ const resolvedItems = items.map((it) => ({
   >
     <h2
       class="px-6 text-center font-normal text-[#2f2019] text-[32px] leading-tight tracking-[-0.8px] md:px-[120px] md:text-[48px] md:tracking-[-1px]"
+      data-animate
+      data-animate-type="typing"
     >
       {title}
     </h2>
 
     <div class="relative">
       <div
-        class="onde-atuamos-scroller flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-2 scroll-px-6 md:px-[120px] md:scroll-px-[120px]"
+        class="onde-atuamos-scroller flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-2 scroll-px-6 md:cursor-grab md:px-[120px] md:scroll-px-[120px]"
       >
         {
           resolvedItems.map((item) => (
@@ -122,6 +124,100 @@ const resolvedItems = items.map((it) => ({
         });
       });
 
+      // Mouse drag-to-scroll (touch already works natively via overflow scroll).
+      let activePointerId: number | null = null;
+      let dragStartX = 0;
+      let lastClientX = 0;
+      let dragMoved = false;
+      const DRAG_THRESHOLD = 5;
+
+      const onPointerDown = (e: PointerEvent) => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        activePointerId = e.pointerId;
+        dragMoved = false;
+        dragStartX = e.clientX;
+        lastClientX = e.clientX;
+      };
+
+      const onPointerMove = (e: PointerEvent) => {
+        if (activePointerId !== e.pointerId) return;
+        const totalDx = e.clientX - dragStartX;
+        if (!dragMoved && Math.abs(totalDx) > DRAG_THRESHOLD) {
+          dragMoved = true;
+          // Capture the pointer so subsequent move/up events still hit us
+          // even if the cursor leaves the scroller bounds.
+          scroller.setPointerCapture(e.pointerId);
+          scroller.classList.add('is-dragging');
+          scroller.style.scrollSnapType = 'none';
+          // `scroll-smooth` is set on the container; turn it off during drag
+          // so each scrollLeft assignment is instantaneous instead of animating.
+          scroller.style.scrollBehavior = 'auto';
+          // Block native text selection that would otherwise start.
+          e.preventDefault();
+        }
+        if (dragMoved) {
+          // Incremental delta — the browser clamps scrollLeft at edges, so
+          // tracking absolute (clientX - startX) breaks reversing direction
+          // after hitting an edge.
+          const dx = e.clientX - lastClientX;
+          lastClientX = e.clientX;
+          scroller.scrollLeft -= dx;
+          e.preventDefault();
+        }
+      };
+
+      const onPointerUp = (e: PointerEvent) => {
+        if (activePointerId !== e.pointerId) return;
+        const wasDragging = dragMoved;
+        activePointerId = null;
+        dragMoved = false;
+        scroller.classList.remove('is-dragging');
+        scroller.style.scrollSnapType = '';
+        scroller.style.scrollBehavior = '';
+        if (scroller.hasPointerCapture(e.pointerId)) {
+          scroller.releasePointerCapture(e.pointerId);
+        }
+        if (!wasDragging) return;
+
+        // Suppress the click that fires after a drag. Use { once: true } so
+        // a stale handler can't accidentally swallow a future legitimate click.
+        scroller.addEventListener(
+          'click',
+          (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+          },
+          { capture: true, once: true },
+        );
+
+        // Snap to the nearest card after drag ends.
+        const center = scroller.scrollLeft + scroller.clientWidth / 2;
+        let nearest: HTMLElement | null = null;
+        let nearestDist = Infinity;
+        articles.forEach((a) => {
+          const articleCenter = a.offsetLeft + a.offsetWidth / 2;
+          const dist = Math.abs(center - articleCenter);
+          if (dist < nearestDist) {
+            nearestDist = dist;
+            nearest = a;
+          }
+        });
+        if (nearest) {
+          const padLeft =
+            parseFloat(getComputedStyle(scroller).scrollPaddingLeft) || 0;
+          scroller.scrollTo({
+            left: (nearest as HTMLElement).offsetLeft - padLeft,
+            behavior: 'smooth',
+          });
+        }
+      };
+
+      scroller.addEventListener('pointerdown', onPointerDown);
+      scroller.addEventListener('pointermove', onPointerMove);
+      scroller.addEventListener('pointerup', onPointerUp);
+      scroller.addEventListener('pointercancel', onPointerUp);
+      // Don't react to pointerleave — pointer capture handles that case.
+
       updateDots();
     },
   );
@@ -133,5 +229,12 @@ const resolvedItems = items.map((it) => ({
   }
   .onde-atuamos-scroller::-webkit-scrollbar {
     display: none;
+  }
+  .onde-atuamos-scroller.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+  .onde-atuamos-scroller.is-dragging * {
+    pointer-events: none;
   }
 </style>

@@ -3,6 +3,7 @@ import { url } from '../../lib/url';
 
 const image1 = url('/images/sobre/trajetoria-1.webp');
 const image2 = url('/images/sobre/trajetoria-2.webp');
+const logoSrc = url('/logo.svg');
 ---
 
 <section class="w-full border-b border-gold-5 bg-white">
@@ -27,11 +28,10 @@ const image2 = url('/images/sobre/trajetoria-2.webp');
           class="relative flex flex-1 flex-col justify-center overflow-hidden rounded-2xl bg-gold p-5 md:p-8"
         >
           <span
-            class="pointer-events-none absolute right-0 top-0 h-full w-1/2 select-none text-[120px] font-bold leading-none text-white/15 md:text-[160px]"
             aria-hidden="true"
-          >
-            C
-          </span>
+            class="logo-watermark pointer-events-none absolute -right-4 -top-4 size-[140px] select-none md:size-[180px]"
+            style={`--logo-url: url(${logoSrc}); --watermark-rgb: 47 32 25;`}
+          ></span>
           <p
             class="relative text-[28px] font-bold leading-9 text-white md:text-[36px] md:leading-10"
           >
@@ -50,11 +50,10 @@ const image2 = url('/images/sobre/trajetoria-2.webp');
           class="relative flex flex-1 flex-col justify-center overflow-hidden rounded-2xl bg-navy p-5 md:p-8"
         >
           <span
-            class="pointer-events-none absolute right-0 top-0 h-full w-1/2 select-none text-[120px] font-bold leading-none text-white/15 md:text-[160px]"
             aria-hidden="true"
-          >
-            N
-          </span>
+            class="logo-watermark pointer-events-none absolute -right-4 -top-4 size-[140px] select-none md:size-[180px]"
+            style={`--logo-url: url(${logoSrc});`}
+          ></span>
           <p
             class="relative text-[28px] font-bold leading-9 text-white md:text-[36px] md:leading-10"
           >
@@ -84,6 +83,8 @@ const image2 = url('/images/sobre/trajetoria-2.webp');
     <div class="flex flex-1 flex-col gap-6">
       <h2
         class="text-[#2f2019] text-[28px] font-medium leading-tight tracking-[-1px] md:text-[32px] md:tracking-[-1.5px]"
+        data-animate
+        data-animate-type="typing"
       >
         Nossa trajetória
       </h2>

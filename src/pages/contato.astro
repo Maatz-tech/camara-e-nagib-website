@@ -48,6 +48,8 @@ const jsonLd = {
           <div class="flex flex-col gap-4">
             <h2
               class="text-[#2f2019] text-[26px] font-medium leading-tight tracking-[-0.6px] md:text-[32px] md:tracking-[-0.9px]"
+              data-animate
+              data-animate-type="typing"
             >
               Fale diretamente com a equipe
             </h2>
@@ -134,6 +136,8 @@ const jsonLd = {
           >
             <h2
               class="text-[#2f2019] text-[22px] font-semibold leading-tight tracking-[-0.5px] md:text-[24px]"
+              data-animate
+              data-animate-type="typing"
             >
               Envie sua mensagem
             </h2>
@@ -209,7 +213,7 @@ const jsonLd = {
                 id="contact-area"
                 name="area"
                 required
-                class="appearance-none rounded-full border border-[#d1d5db] bg-white bg-[url('/icons/chevron-down.svg')] bg-[right_1.25rem_center] bg-no-repeat px-5 py-3.5 pr-12 text-[15px] text-[#2f2019] focus:border-gold focus:outline-none"
+                class="appearance-none rounded-full border border-[#d1d5db] bg-white bg-[url('/icons/chevron-down.svg')] bg-[length:1.25rem_1.25rem] bg-[right_1.25rem_center] bg-no-repeat px-5 py-3.5 pr-12 text-[15px] text-[#2f2019] focus:border-gold focus:outline-none"
               >
                 <option value="" disabled selected>Selecione</option>
                 <option value="imobiliario">Direito Imobiliário</option>
@@ -238,7 +242,7 @@ const jsonLd = {
               ></textarea>
             </div>
 
-            <label class="flex cursor-pointer items-start gap-3 text-[14px] font-normal leading-[1.4] text-[#2f2019] md:text-[15px]">
+            <label class="flex cursor-pointer items-center gap-3 text-[14px] font-normal leading-[1.4] text-[#2f2019] md:text-[15px]">
               <input
                 type="checkbox"
                 name="privacy"
@@ -247,9 +251,9 @@ const jsonLd = {
               />
               <span
                 aria-hidden="true"
-                class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded bg-mute text-white peer-checked:bg-gold peer-focus-visible:ring-2 peer-focus-visible:ring-gold/40"
+                class="flex size-6 shrink-0 items-center justify-center rounded bg-mute text-white peer-checked:bg-gold peer-focus-visible:ring-2 peer-focus-visible:ring-gold/40 [&_.icon]:hidden peer-checked:[&_.icon]:inline-block"
               >
-                <Icon name="check" size={14} class="hidden peer-checked:block" />
+                <Icon name="check" size={14} />
               </span>
               <span>
                 Li e concordo com a

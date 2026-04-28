@@ -27,8 +27,8 @@ const watermarkSrc = watermark
 
 const watermarkClasses =
   watermarkPosition === 'center'
-    ? 'pointer-events-none absolute left-1/2 top-1/2 hidden h-[180%] w-auto -translate-x-1/2 -translate-y-1/2 select-none md:block'
-    : 'pointer-events-none absolute right-0 top-1/2 hidden h-[180%] w-auto -translate-y-1/2 select-none md:block';
+    ? 'pointer-events-none absolute left-1/2 top-1/2 hidden h-[140%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-60 md:block'
+    : 'pointer-events-none absolute right-0 top-1/2 hidden h-[140%] w-auto max-w-none -translate-y-1/2 select-none md:block';
 
 const isCenter = align === 'center';
 const hasTitleSlot = Astro.slots.has('title');
@@ -57,7 +57,7 @@ const hasTitleSlot = Astro.slots.has('title');
         isCenter ? 'items-center text-center mx-auto' : 'items-start',
       ]}
     >
-      {eyebrow && <span class="eyebrow eyebrow-pill bg-[#f1ece2]">{eyebrow}</span>}
+      {eyebrow && <span class="eyebrow eyebrow-pill bg-[#f1ece2]" data-animate>{eyebrow}</span>}
       {
         hasTitleSlot ? (
           <slot name="title" />
@@ -65,6 +65,8 @@ const hasTitleSlot = Astro.slots.has('title');
           <h1
             class="italic font-medium text-[#2f2019] text-[32px] leading-tight tracking-[-0.8px] md:text-[48px] md:tracking-[-1.2px]"
             style="font-family: var(--font-serif);"
+            data-animate
+            data-animate-type="typing"
           >
             {title}
           </h1>
@@ -72,7 +74,7 @@ const hasTitleSlot = Astro.slots.has('title');
       }
       {
         subtitle && (
-          <p class="text-[16px] font-normal leading-7 text-[#33261d] md:text-[18px]">
+          <p class="text-[16px] font-normal leading-7 text-[#33261d] md:text-[18px]" data-animate data-animate-delay="200">
             {subtitle}
           </p>
         )

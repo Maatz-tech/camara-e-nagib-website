@@ -16,10 +16,12 @@ const heroImage = url('/images/hero/hero-image.webp');
   >
     <!-- Copy + CTAs (left on desktop) -->
     <div class="flex w-full flex-col items-start md:flex-1">
-      <span class="eyebrow eyebrow-pill">Consultoria jurídica</span>
+      <span class="eyebrow eyebrow-pill" data-animate>Consultoria jurídica</span>
 
       <h1
         class="mt-5 font-medium text-[#2f2019] text-[36px] leading-[44px] tracking-[-1px] md:mt-6 md:text-[64px] md:leading-[80px] md:tracking-[-1.5px]"
+        data-animate
+        data-animate-type="typing"
       >
         Estratégia jurídica para
         <span
@@ -32,6 +34,8 @@ const heroImage = url('/images/hero/hero-image.webp');
 
       <p
         class="mt-4 max-w-[576px] text-[16px] font-normal leading-[26px] text-[#33261d] md:mt-6 md:text-[18px] md:leading-[30px]"
+        data-animate
+        data-animate-delay="200"
       >
         Atuação integrada em Direito de Família, Sucessões e Imobiliário para
         organizar, proteger e estruturar seu patrimônio com clareza e
@@ -49,7 +53,11 @@ const heroImage = url('/images/hero/hero-image.webp');
         fetchpriority="high"
       />
 
-      <div class="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-10 md:gap-4">
+      <div
+        class="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-10 md:gap-4"
+        data-animate
+        data-animate-delay="300"
+      >
         <a href={ctaPrimaryHref} class="btn btn-primary btn-md">
           <span>Agendar Consultoria</span>
           <Icon name="arrow-right" size={20} />

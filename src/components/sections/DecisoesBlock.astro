@@ -13,6 +13,7 @@ interface Props {
   title: string;
   ctaHref?: string;
   ctaLabel?: string;
+  showCta?: boolean;
   items: ServiceItem[];
 }
 
@@ -21,6 +22,7 @@ const {
   title,
   ctaHref = '#',
   ctaLabel = 'Saiba mais',
+  showCta = true,
   items,
 } = Astro.props;
 ---
@@ -28,77 +30,91 @@ const {
 <div class="flex w-full flex-col gap-6">
   <!-- Header -->
   <div class="flex flex-col gap-6">
-    <span class="eyebrow eyebrow-pill self-start">{eyebrow}</span>
+    <span class="eyebrow eyebrow-pill self-start" data-animate>{eyebrow}</span>
     <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
       <h2
         class="font-medium text-[#2f2019] text-[32px] leading-[40px] tracking-[-0.8px] md:text-[48px] md:leading-[48px] md:tracking-[-1.2px]"
+        data-animate
+        data-animate-type="typing"
       >
         {title}
       </h2>
-      <!-- Desktop CTA: outline gold next to title -->
-      <a
-        href={ctaHref}
-        class="hidden items-center justify-center gap-2 rounded-full border border-gold px-6 py-2.5 text-[14px] font-semibold leading-7 text-gold transition-colors hover:bg-gold hover:text-white md:inline-flex md:gap-3 md:px-[25px] md:py-[11px] md:text-[18px]"
-      >
-        <span>{ctaLabel}</span>
-        <Icon name="arrow-right" size={20} />
-      </a>
+      {showCta && (
+        <!-- Desktop CTA: outline gold next to title -->
+        <a
+          href={ctaHref}
+          class="hidden items-center justify-center gap-2 rounded-full border border-gold px-6 py-2.5 text-[14px] font-semibold leading-7 text-gold transition-colors hover:bg-gold hover:text-white md:inline-flex md:gap-3 md:px-[25px] md:py-[11px] md:text-[18px]"
+        >
+          <span>{ctaLabel}</span>
+          <Icon name="arrow-right" size={20} />
+        </a>
+      )}
     </div>
   </div>
 
   <!-- Items -->
   <div class="flex flex-col">
     {
-      items.map((item, idx) => (
-        <a
-          href={item.href ?? '#'}
-          class="group flex flex-col gap-4 border-b border-[#d1d5db] py-6 transition-colors md:flex-row md:items-start md:gap-10 md:px-6 md:py-12 md:hover:bg-gold-5"
-        >
-          <!-- Number -->
-          <div class="shrink-0 md:w-[38px]">
-            <span class="text-[20px] font-light leading-7 text-gold">
-              ({String(idx + 1).padStart(2, '0')})
-            </span>
-          </div>
-
-          <!-- Title + tags -->
-          <div class="flex flex-1 flex-col gap-3 md:gap-4">
-            <h3 class="text-[20px] font-semibold leading-[28px] text-[#2f2019] md:text-[24px] md:leading-[32px]">
-              {item.title}
-            </h3>
-            <div class="flex flex-wrap gap-2">
-              {item.tags.map((tag) => (
-                <span class="inline-flex items-center rounded-full border border-gold-30 px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[-0.35px] text-gold">
-                  {tag}
-                </span>
-              ))}
+      items.map((item, idx) => {
+        const Tag = showCta ? 'a' : 'div';
+        return (
+          <Tag
+            {...(showCta ? { href: item.href ?? ctaHref } : {})}
+            class:list={[
+              'group flex flex-col gap-4 border-b border-[#d1d5db] py-6 md:flex-row md:items-start md:gap-10 md:px-6 md:py-12',
+              showCta && 'transition-colors md:hover:bg-gold-5',
+            ]}
+          >
+            <!-- Number -->
+            <div class="shrink-0 md:w-[38px]">
+              <span class="text-[20px] font-light leading-7 text-gold">
+                ({String(idx + 1).padStart(2, '0')})
+              </span>
             </div>
-          </div>
 
-          <!-- Description -->
-          <div class="flex-1 md:max-w-[477px]">
-            <p class="text-[15px] font-medium leading-[1.5] text-[#2f2019] md:text-[16px]">
-              {item.description}
-            </p>
-          </div>
+            <!-- Title + tags -->
+            <div class="flex flex-1 flex-col gap-3 md:gap-4">
+              <h3 class="text-[20px] font-semibold leading-[28px] text-[#2f2019] md:text-[24px] md:leading-[32px]">
+                {item.title}
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                {item.tags.map((tag) => (
+                  <span class="inline-flex items-center rounded-full border border-gold-30 px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[-0.35px] text-gold">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
 
-          <!-- Arrow circle button: bottom-left on mobile, right on desktop -->
-          <div class="flex shrink-0 md:items-start md:pt-1">
-            <span class="flex size-10 items-center justify-center rounded-full border border-mist bg-white text-[#2f2019] shadow-[0_1px_1px_rgba(0,0,0,0.05)] transition-colors group-hover:border-gold-30 group-hover:bg-gold group-hover:text-white">
-              <Icon name="arrow-up-right" size={18} />
-            </span>
-          </div>
-        </a>
-      ))
+            <!-- Description -->
+            <div class="flex-1 md:max-w-[477px]">
+              <p class="text-[15px] font-medium leading-[1.5] text-[#2f2019] md:text-[16px]">
+                {item.description}
+              </p>
+            </div>
+
+            {showCta && (
+              <!-- Arrow circle button: bottom-left on mobile, right on desktop -->
+              <div class="flex shrink-0 md:items-start md:pt-1">
+                <span class="flex size-10 items-center justify-center rounded-full border border-mist bg-white text-[#2f2019] shadow-[0_1px_1px_rgba(0,0,0,0.05)] transition-colors group-hover:border-gold-30 group-hover:bg-gold group-hover:text-white">
+                  <Icon name="arrow-up-right" size={18} />
+                </span>
+              </div>
+            )}
+          </Tag>
+        );
+      })
     }
   </div>
 
-  <!-- Mobile CTA: full-width filled gold at the bottom -->
-  <a
-    href={ctaHref}
-    class="btn btn-primary btn-md mt-2 w-full md:hidden"
-  >
-    <span>{ctaLabel}</span>
-    <Icon name="arrow-right" size={20} />
-  </a>
+  {showCta && (
+    <!-- Mobile CTA: full-width filled gold at the bottom -->
+    <a
+      href={ctaHref}
+      class="btn btn-primary btn-md mt-2 w-full md:hidden"
+    >
+      <span>{ctaLabel}</span>
+      <Icon name="arrow-right" size={20} />
+    </a>
+  )}
 </div>

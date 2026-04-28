@@ -4,6 +4,7 @@ import { url } from '../../lib/url';
 
 const rafaelaImage = url('/images/por-que-confiar/rafaela.webp');
 const anaImage = url('/images/por-que-confiar/ana-carolina.webp');
+const logoSrc = url('/logo.svg');
 
 const benefits = [
   {
@@ -35,6 +36,8 @@ const benefits = [
     <div class="flex flex-1 flex-col gap-8 md:max-w-[568px] md:gap-10">
       <h2
         class="font-medium text-[#2f2019] text-[28px] leading-[36px] tracking-[-0.6px] md:text-[36px] md:leading-[45px] md:tracking-[-0.9px]"
+        data-animate
+        data-animate-type="typing"
       >
         Por que clientes confiam na Câmara & Nagib?
       </h2>
@@ -81,11 +84,10 @@ const benefits = [
           class="relative overflow-hidden rounded-[24px] bg-gold p-6 md:p-8"
         >
           <span
-            class="pointer-events-none absolute right-0 top-0 h-full w-1/2 select-none text-[180px] font-bold leading-none text-white/15"
             aria-hidden="true"
-          >
-            C
-          </span>
+            class="logo-watermark pointer-events-none absolute -right-6 -top-6 size-[180px] select-none md:size-[220px]"
+            style={`--logo-url: url(${logoSrc}); --watermark-rgb: 47 32 25;`}
+          ></span>
           <p class="relative text-[24px] font-bold leading-10 text-white md:text-[36px]">
             20+
           </p>
@@ -103,11 +105,10 @@ const benefits = [
           class="relative overflow-hidden rounded-[24px] bg-navy p-6 md:p-8"
         >
           <span
-            class="pointer-events-none absolute right-0 top-0 h-full w-1/2 select-none text-[180px] font-bold leading-none text-white/15"
             aria-hidden="true"
-          >
-            N
-          </span>
+            class="logo-watermark pointer-events-none absolute -right-6 -top-6 size-[180px] select-none md:size-[220px]"
+            style={`--logo-url: url(${logoSrc});`}
+          ></span>
           <p class="relative text-[24px] font-bold leading-10 text-white md:text-[36px]">
             500+
           </p>
