@@ -27,14 +27,27 @@ const logoSrc = logo ? resolve(logo) : undefined;
 
 <section class="w-full border-b border-gold-5 bg-white">
   <div
-    class="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 pt-12 pb-12 md:flex-row md:items-start md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-8 px-6 pt-12 pb-12 md:flex-row md:items-start md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
   >
-    <!-- Image collage -->
-    <div class="relative shrink-0 self-center md:self-start">
-      <div class="relative h-[300px] w-[280px] md:h-[352px] md:w-[504px]">
+    <!-- Mobile: single wide photo. Desktop: collage with 2 photos + logo overlay. -->
+    <div
+      class="relative aspect-[327/228] w-full overflow-hidden rounded-2xl md:hidden"
+    >
+      <img
+        src={image1Src}
+        alt=""
+        aria-hidden="true"
+        class="absolute inset-0 h-full w-full object-cover object-center"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Desktop image collage -->
+    <div class="relative hidden shrink-0 md:block md:self-start">
+      <div class="relative h-[352px] w-[504px]">
         <!-- Photo 1 (top-left) -->
         <div
-          class="absolute left-0 top-0 h-[200px] w-[160px] overflow-hidden rounded-2xl md:h-[300px] md:w-[240px]"
+          class="absolute left-0 top-0 h-[300px] w-[240px] overflow-hidden rounded-2xl"
         >
           <img
             src={image1Src}
@@ -46,7 +59,7 @@ const logoSrc = logo ? resolve(logo) : undefined;
         </div>
         <!-- Photo 2 (bottom-right, offset) -->
         <div
-          class="absolute right-0 top-[80px] h-[200px] w-[160px] overflow-hidden rounded-2xl md:right-0 md:top-[32px] md:h-[300px] md:w-[240px]"
+          class="absolute right-0 top-[32px] h-[300px] w-[240px] overflow-hidden rounded-2xl"
         >
           <img
             src={image2Src}
@@ -59,7 +72,7 @@ const logoSrc = logo ? resolve(logo) : undefined;
         <!-- Logo overlay -->
         {
           logoSrc && (
-            <div class="absolute left-[140px] top-[230px] flex size-14 items-center justify-center md:left-[212px] md:top-[272px] md:size-20">
+            <div class="absolute left-[212px] top-[272px] flex size-20 items-center justify-center">
               <img
                 src={logoSrc}
                 alt="Câmara & Nagib"
@@ -75,7 +88,7 @@ const logoSrc = logo ? resolve(logo) : undefined;
     <!-- Copy -->
     <div class="flex flex-1 flex-col gap-6">
       <h2
-        class="text-[#2f2019] text-[28px] leading-tight tracking-[-0.8px] md:text-[32px] md:tracking-[-1.2px]"
+        class="text-[#2f2019] text-[32px] leading-[1.2] tracking-[-0.9px] md:text-[32px] md:tracking-[-1.2px]"
       >
         <span class="font-normal">{titleStart}</span>
         <span
@@ -87,7 +100,7 @@ const logoSrc = logo ? resolve(logo) : undefined;
       </h2>
 
       <div
-        class="flex flex-col gap-4 text-[15px] font-normal leading-[1.6] text-[#2f2019] md:text-[18px]"
+        class="flex flex-col gap-4 text-[16px] font-normal leading-[1.6] text-[#2f2019] md:text-[18px]"
       >
         {description.map((paragraph) => <p>{paragraph}</p>)}
       </div>
