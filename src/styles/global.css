@@ -82,76 +82,78 @@ body {
 }
 
 /* ----------- Typography utilities (semantic) ----------- */
-.eyebrow {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--color-gold);
-}
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
 
-.eyebrow-pill {
-  display: inline-flex;
-  align-items: center;
-  background: var(--color-gold-10);
-  color: var(--color-gold);
-  padding: 4px 16px;
-  border-radius: 999px;
-}
+  .eyebrow-pill {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-gold-10);
+    color: var(--color-gold);
+    padding: 4px 16px;
+    border-radius: 999px;
+  }
 
-.h1 {
-  font-weight: 700;
-  font-size: 56px;
-  line-height: 1.07;
-  letter-spacing: var(--tracking-tightest);
-  color: var(--color-navy);
-}
+  .h1 {
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1.07;
+    letter-spacing: var(--tracking-tightest);
+    color: var(--color-navy);
+  }
 
-.h2 {
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 40px;
-  letter-spacing: var(--tracking-tight);
-  color: var(--color-navy);
-}
+  .h2 {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-navy);
+  }
 
-.h3 {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
-  letter-spacing: var(--tracking-snug);
-  color: var(--color-navy);
-}
+  .h3 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: var(--tracking-snug);
+    color: var(--color-navy);
+  }
 
-.h4 {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: var(--tracking-snug-2);
-  color: var(--color-navy);
-}
+  .h4 {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: var(--tracking-snug-2);
+    color: var(--color-navy);
+  }
 
-.body-lg {
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 28px;
-  color: var(--color-navy);
-}
+  .body-lg {
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--color-navy);
+  }
 
-.body {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--color-navy);
-}
+  .body {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-navy);
+  }
 
-.body-sm {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--color-navy);
+  .body-sm {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-navy);
+  }
 }
 
 /* ----------- Icon (CSS mask, inherits currentColor) ----------- */
@@ -168,49 +170,51 @@ body {
 }
 
 /* ----------- Buttons (primary CTA from design) ----------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  border-radius: 999px;
-  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, opacity 200ms ease;
-  white-space: nowrap;
-}
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 999px;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, opacity 200ms ease;
+    white-space: nowrap;
+  }
 
-.btn-sm {
-  padding: 12px 24px;
-}
+  .btn-sm {
+    padding: 12px 24px;
+  }
 
-.btn-md {
-  padding: 16px 32px;
-  font-size: 16px;
-  line-height: 28px;
-}
+  .btn-md {
+    padding: 16px 32px;
+    font-size: 16px;
+    line-height: 28px;
+  }
 
-.btn-lg {
-  padding: 14px 32px;
-  font-size: 18px;
-  line-height: 28px;
-}
+  .btn-lg {
+    padding: 14px 32px;
+    font-size: 18px;
+    line-height: 28px;
+  }
 
-.btn-primary {
-  background-color: var(--color-gold);
-  color: #ffffff;
-}
-.btn-primary:hover {
-  background-color: #8c7044;
-}
+  .btn-primary {
+    background-color: var(--color-gold);
+    color: #ffffff;
+  }
+  .btn-primary:hover {
+    background-color: #8c7044;
+  }
 
-.btn-outline {
-  background-color: transparent;
-  color: var(--color-navy);
-  border: 1px solid var(--color-navy);
-}
-.btn-outline:hover {
-  background-color: var(--color-navy);
-  color: #ffffff;
+  .btn-outline {
+    background-color: transparent;
+    color: var(--color-navy);
+    border: 1px solid var(--color-navy);
+  }
+  .btn-outline:hover {
+    background-color: var(--color-navy);
+    color: #ffffff;
+  }
 }
