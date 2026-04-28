@@ -20,8 +20,8 @@ const leaders = [
 ];
 
 const bullets = [
-  'Proteção Patrimonial e Planejamento Familiar;',
-  'Decisões imobiliárias com segurança jurídica;',
+  'Proteção Patrimonial e Planejamento Familiar',
+  'Decisões imobiliárias com segurança jurídica',
   'Estratégia antes do risco',
 ];
 ---
@@ -31,10 +31,10 @@ const bullets = [
   class="w-full border-b border-gold-5 bg-mist"
 >
   <div
-    class="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-6 pt-12 pb-12 md:flex-row md:items-start md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
+    class="mx-auto flex w-full max-w-[1440px] flex-col gap-6 px-6 pt-12 pb-12 md:flex-row md:items-start md:gap-16 md:px-[120px] md:pt-20 md:pb-20"
   >
     <!-- Left column -->
-    <div class="flex flex-1 flex-col items-start gap-6">
+    <div class="flex w-full flex-col items-start gap-6 md:flex-1">
       <span class="eyebrow eyebrow-pill">nossas lideranças</span>
 
       <p
@@ -45,12 +45,15 @@ const bullets = [
         estratégica, considerando riscos e impacto patrimonial.
       </p>
 
-      <ul class="flex flex-col gap-3 py-2 md:gap-4 md:py-5">
+      <!-- Mobile: carousel of white cards. Desktop: inline list with check icon. -->
+      <ul
+        class="liderancas-bullets -mx-6 flex w-[calc(100%+3rem)] snap-x snap-mandatory gap-4 overflow-x-auto px-6 scroll-px-6 pb-2 md:mx-0 md:w-full md:flex-col md:gap-4 md:overflow-visible md:px-0 md:py-2 md:snap-none"
+      >
         {
           bullets.map((item) => (
-            <li class="flex items-center gap-3.5">
+            <li class="flex w-[280px] shrink-0 snap-start flex-col items-center justify-center gap-3 rounded-2xl bg-white p-4 text-center md:w-full md:flex-row md:items-center md:gap-3.5 md:bg-transparent md:p-0 md:text-left">
               <Icon name="check-circle" size={20} class="text-gold" />
-              <span class="text-[15px] font-medium leading-6 text-[#2f2019] md:text-[16px]">
+              <span class="text-[16px] font-medium leading-6 text-[#2f2019] md:text-[16px]">
                 {item}
               </span>
             </li>
@@ -58,23 +61,23 @@ const bullets = [
         }
       </ul>
 
-      <a href={ctaHref} class="btn btn-primary btn-md mt-2">
+      <a href={ctaHref} class="btn btn-primary btn-md mt-2 w-full md:w-auto">
         <span>Agendar Consultoria</span>
         <Icon name="arrow-right" size={20} />
       </a>
     </div>
 
     <!-- Right: leader cards -->
-    <div class="flex w-full gap-4 md:w-auto md:gap-5">
+    <div class="flex w-full flex-col gap-4 md:w-auto md:flex-row md:gap-5">
       {
         leaders.map((leader) => (
-          <article class="relative aspect-[276/415] flex-1 overflow-hidden rounded-[25px] md:w-[276px] md:flex-none">
+          <article class="relative aspect-[554/830] w-full overflow-hidden rounded-[24px] md:aspect-[276/415] md:w-[276px] md:rounded-[25px]">
             <img
               src={leader.image}
               alt={leader.name}
               class="absolute inset-0 h-full w-full object-cover object-center"
-              width="276"
-              height="415"
+              width="554"
+              height="830"
               loading="lazy"
             />
             <div
@@ -107,3 +110,12 @@ const bullets = [
     </div>
   </div>
 </section>
+
+<style>
+  .liderancas-bullets {
+    scrollbar-width: none;
+  }
+  .liderancas-bullets::-webkit-scrollbar {
+    display: none;
+  }
+</style>
