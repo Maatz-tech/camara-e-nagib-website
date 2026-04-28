@@ -70,8 +70,8 @@ html {
   border-radius: 4px;
 }
 
-/* Improve image rendering */
-img {
+/* Responsive image default — :where() keeps specificity at 0 so any utility class wins */
+:where(img) {
   max-width: 100%;
   height: auto;
 }
