@@ -5,8 +5,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://maatz-tech.github.io',
-  base: '/camara-e-nagib-website',
+  site: process.env.GITHUB_ACTIONS ? 'https://maatz-tech.github.io' : 'https://camaraenagib.adv.br',
+  base: process.env.GITHUB_ACTIONS ? '/camara-e-nagib-website' : '/',
+
   integrations: [
     sitemap({
       changefreq: 'weekly',
@@ -16,5 +17,21 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      cssMinify: false,
+      minify: false,
+      rollupOptions: {
+        output: {
+          manualChunks: undefined,
+        },
+      },
+    },
   },
+
+  build: {
+    inlineStylesheets: 'auto',
+    assets: 'assets',
+  },
+
+  compressHTML: false,
 });
