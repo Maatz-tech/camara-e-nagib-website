@@ -30,7 +30,7 @@ const logoSrc = url('/logo.svg');
           <span
             aria-hidden="true"
             class="logo-watermark pointer-events-none absolute -right-4 -top-4 size-[140px] select-none md:size-[180px]"
-            style={`--logo-url: url(${logoSrc}); --watermark-rgb: 47 32 25;`}
+            style={`-webkit-mask: url(${logoSrc}) center / contain no-repeat; mask: url(${logoSrc}) center / contain no-repeat; --watermark-rgb: 47 32 25;`}
           ></span>
           <p
             class="relative text-[28px] font-bold leading-9 text-white md:text-[36px] md:leading-10"
@@ -52,7 +52,7 @@ const logoSrc = url('/logo.svg');
           <span
             aria-hidden="true"
             class="logo-watermark pointer-events-none absolute -right-4 -top-4 size-[140px] select-none md:size-[180px]"
-            style={`--logo-url: url(${logoSrc});`}
+            style={`-webkit-mask: url(${logoSrc}) center / contain no-repeat; mask: url(${logoSrc}) center / contain no-repeat;`}
           ></span>
           <p
             class="relative text-[28px] font-bold leading-9 text-white md:text-[36px] md:leading-10"

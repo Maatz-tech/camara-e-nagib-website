@@ -3,14 +3,14 @@ import { join, dirname, relative } from 'path';
 
 const distDir = './dist';
 
-async function getHtmlFiles(dir, files = []) {
+async function getFilesByExt(dir, exts, files = []) {
   const entries = await readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
     const fullPath = join(dir, entry.name);
     if (entry.isDirectory()) {
-      await getHtmlFiles(fullPath, files);
-    } else if (entry.name.endsWith('.html')) {
+      await getFilesByExt(fullPath, exts, files);
+    } else if (exts.some((ext) => entry.name.endsWith(ext))) {
       files.push(fullPath);
     }
   }
@@ -18,37 +18,47 @@ async function getHtmlFiles(dir, files = []) {
   return files;
 }
 
-async function fixPaths() {
-  const htmlFiles = await getHtmlFiles(distDir);
+function rewriteHtml(content, relativeToRoot) {
+  // href / src attributes (single + double quotes), skip protocol-relative `//`
+  content = content.replace(/href="\/(?!\/)/g, `href="${relativeToRoot}/`);
+  content = content.replace(/src="\/(?!\/)/g, `src="${relativeToRoot}/`);
+  content = content.replace(/href='\/(?!\/)/g, `href='${relativeToRoot}/`);
+  content = content.replace(/src='\/(?!\/)/g, `src='${relativeToRoot}/`);
 
-  for (const file of htmlFiles) {
+  // url() in any inline style (quoted or unquoted), skip protocol-relative `//`
+  content = content.replace(/url\("\/(?!\/)/g, `url("${relativeToRoot}/`);
+  content = content.replace(/url\('\/(?!\/)/g, `url('${relativeToRoot}/`);
+  content = content.replace(/url\(\/(?!\/)/g, `url(${relativeToRoot}/`);
+
+  return content;
+}
+
+function rewriteCss(content, relativeToRoot) {
+  // Only url() refs — CSS files have nothing else to rewrite. Skip `//` and `data:`.
+  content = content.replace(/url\("\/(?!\/)/g, `url("${relativeToRoot}/`);
+  content = content.replace(/url\('\/(?!\/)/g, `url('${relativeToRoot}/`);
+  content = content.replace(/url\(\/(?!\/)/g, `url(${relativeToRoot}/`);
+  return content;
+}
+
+async function fixPaths() {
+  const files = await getFilesByExt(distDir, ['.html', '.css']);
+
+  for (const file of files) {
     let content = await readFile(file, 'utf-8');
 
-    // Calculate relative path from this file to dist root
     const fileDir = dirname(file);
     const relativeToRoot = relative(fileDir, distDir) || '.';
 
-    // Replace absolute paths with relative paths
-    // /assets/ -> ./assets/ or ../assets/
-    content = content.replace(/href="\/assets\//g, `href="${relativeToRoot}/assets/`);
-    content = content.replace(/src="\/assets\//g, `src="${relativeToRoot}/assets/`);
-
-    // Replace other absolute paths for images
-    content = content.replace(/src="\//g, `src="${relativeToRoot}/`);
-    content = content.replace(/href="\/(?!\/)/g, `href="${relativeToRoot}/`);
-
-    // Replace url() in inline styles
-    content = content.replace(/url\('\//g, `url('${relativeToRoot}/`);
-    content = content.replace(/url\("\//g, `url("${relativeToRoot}/`);
-
-    // Fix double dots issue (./. -> .)
-    content = content.replace(/="\.\/\./g, '=".');
+    content = file.endsWith('.css')
+      ? rewriteCss(content, relativeToRoot)
+      : rewriteHtml(content, relativeToRoot);
 
     await writeFile(file, content, 'utf-8');
     console.log(`Fixed: ${file}`);
   }
 
-  console.log('All paths fixed!');
+  console.log('Done!');
 }
 
-fixPaths().catch(console.error);
+fixPaths();

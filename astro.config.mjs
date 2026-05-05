@@ -5,8 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.GITHUB_ACTIONS ? 'https://maatz-tech.github.io' : 'https://camaraenagib.adv.br',
-  base: process.env.GITHUB_ACTIONS ? '/camara-e-nagib-website' : '/',
+  site: 'https://camaraenagib.adv.br',
 
   integrations: [
     sitemap({

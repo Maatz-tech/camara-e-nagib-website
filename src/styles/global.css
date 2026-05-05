@@ -165,8 +165,6 @@ body {
     width: var(--icon-size, 1em);
     height: var(--icon-size, 1em);
     background-color: currentColor;
-    -webkit-mask: var(--icon-url) center / contain no-repeat;
-    mask: var(--icon-url) center / contain no-repeat;
   }
 
   /* Decorative logo watermark — logo shape filled with a fading gradient.
@@ -179,8 +177,6 @@ body {
       rgb(var(--watermark-rgb, 117 145 207) / 0.1) 0%,
       rgb(var(--watermark-rgb, 117 145 207) / 0) 100%
     );
-    -webkit-mask: var(--logo-url) center / contain no-repeat;
-    mask: var(--logo-url) center / contain no-repeat;
   }
 }
 

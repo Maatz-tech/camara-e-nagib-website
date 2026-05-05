@@ -14,12 +14,12 @@ const logoSrc = url('/logo.svg');
   <span
     aria-hidden="true"
     class="logo-watermark pointer-events-none absolute -bottom-16 -left-16 size-[320px] select-none md:-bottom-20 md:-left-20 md:size-[460px]"
-    style={`--logo-url: url(${logoSrc});`}
+    style={`-webkit-mask: url(${logoSrc}) center / contain no-repeat; mask: url(${logoSrc}) center / contain no-repeat;`}
   ></span>
   <span
     aria-hidden="true"
     class="logo-watermark pointer-events-none absolute -right-16 -top-16 size-[320px] select-none md:-right-20 md:-top-20 md:size-[460px]"
-    style={`--logo-url: url(${logoSrc});`}
+    style={`-webkit-mask: url(${logoSrc}) center / contain no-repeat; mask: url(${logoSrc}) center / contain no-repeat;`}
   ></span>
 
   <div
